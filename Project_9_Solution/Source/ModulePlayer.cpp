@@ -43,7 +43,7 @@ bool ModulePlayer::Start()
 
 	gameOver = false;
 
-	collider = App->collisions->AddCollider({ position.x, position.y, 16, 28 }, Collider::Type::PLAYER, this);
+	collider = App->collisions->AddCollider({ position.x, position.y, 16, 24 }, Collider::Type::PLAYER, this);
 
 	// TODO 0: Notice how a font is loaded and the meaning of all its arguments 
 	//char lookupTable[] = { "!  ,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz" };
@@ -66,15 +66,67 @@ Update_Status ModulePlayer::Update()
 
 		if (App->input->keys[SDL_SCANCODE_LEFT] == Key_State::KEY_REPEAT)
 		{
+
 			spdx = -1;
-			position.x += (spdx);
+
+			if ((position.x + spdx) > 32) {
+
+
+				position.x += (spdx);
+
+			}
+
+			else {
+
+				spdx = 0;
+
+				position.x = 32;
+
+			}
 
 		}
 
 		if (App->input->keys[SDL_SCANCODE_RIGHT] == Key_State::KEY_REPEAT)
 		{
+
 			spdx = 1;
-			position.x += (spdx);
+
+			if (orientation == Tetramino_Orientation::UP|| orientation == Tetramino_Orientation::DOWN) {
+
+				if ((position.x + spdx) <= (112 - 24)) {
+
+					position.x += (spdx);
+
+				}
+
+				else {
+
+					spdx = 0;
+
+					position.x = (112 - 24);
+
+				}
+
+			}
+
+			else {
+
+				if ((position.x + spdx) <= (112 - 16)) {
+
+					position.x += (spdx);
+
+				}
+
+				else {
+
+					spdx = 0;
+
+					position.x = (112 - 16);
+
+				}
+
+			}
+
 		}
 
 		if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
@@ -86,14 +138,68 @@ Update_Status ModulePlayer::Update()
 
 		if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 		{
-			
+			int prov;
 
-		}
+			prov = idleAnim.frames->h;
 
-		if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_IDLE) {
+			idleAnim.frames->h = idleAnim.frames->w;
 
-			position.y += (spdy);
+			idleAnim.frames->w = prov;
 
+			collider->rect.h = idleAnim.frames->h;
+
+			collider->rect.w = idleAnim.frames->w;
+
+			switch (orientation) {
+
+			case Tetramino_Orientation::RIGHT:
+
+				idleAnim.frames->x = 0;
+
+				idleAnim.frames->y = 24;
+
+				orientation = Tetramino_Orientation::DOWN;
+
+				break;
+
+			case Tetramino_Orientation::LEFT:
+
+				idleAnim.frames->x = 24;
+
+				idleAnim.frames->y = 24;
+
+				orientation = Tetramino_Orientation::UP;
+
+				break;
+
+			case Tetramino_Orientation::UP:
+
+				idleAnim.frames->x = 0;
+
+				idleAnim.frames->y = 0;
+
+				orientation = Tetramino_Orientation::RIGHT;
+
+				break;
+
+
+			case Tetramino_Orientation::DOWN:
+
+				idleAnim.frames->x = 16;
+
+				idleAnim.frames->y = 0;
+
+				orientation = Tetramino_Orientation::LEFT;
+
+				break;
+
+			}
+
+			if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_IDLE) {
+
+				position.y += (spdy);
+
+			}
 		}
 
 	}
@@ -141,11 +247,12 @@ void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
 {
 	if (c1 == collider && gameOver == false)
 	{
-		
-		spdy = 0;
-		spdx = 0;
+	
 
-		MovablePiece = false;
+			spdy = 0;
+			spdx = 0;
+
+			MovablePiece = false;
 
 	}
 

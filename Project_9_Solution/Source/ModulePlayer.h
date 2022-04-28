@@ -65,6 +65,8 @@ public:
 	uint laserFx = 0;
 	uint explosionFx = 0;
 
+	Tetramino_Orientation orientation = Tetramino_Orientation::RIGHT;
+
 	// Font score index
 	uint score = 000;
 	uint hiscore = 000;
