@@ -28,7 +28,7 @@ ModuleTetramino::~ModuleTetramino()
 bool ModuleTetramino::Start()
 {
 	texture = App->textures->Load("Assets/Sprites/Tetramino.png");
-	tetraminoDestroyedFx = App->audio->LoadFx("Assets/Fx/explosion.wav");
+	//tetraminoDestroyedFx = App->audio->LoadFx("Assets/Fx/explosion.wav");
 
 	return true;
 }

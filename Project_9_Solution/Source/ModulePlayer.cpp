@@ -35,8 +35,8 @@ bool ModulePlayer::Start()
 	texture = App->textures->Load("Assets/Sprites/PinkTetramino.png");
 	currentAnimation = &idleAnim;
 
-	laserFx = App->audio->LoadFx("Assets/Fx/laser.wav");
-	explosionFx = App->audio->LoadFx("Assets/Fx/explosion.wav");
+	//laserFx = App->audio->LoadFx("Assets/Fx/laser.wav");
+	//explosionFx = App->audio->LoadFx("Assets/Fx/explosion.wav");
 
 	position.x = 56;
 	position.y = 37;
