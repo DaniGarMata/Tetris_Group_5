@@ -1,7 +1,8 @@
-#ifndef __MODULE_ENEMIES_H__
-#define __MODULE_ENEMIES_H__
+#ifndef __MODULE_TETRAMINO_H__
+#define __MODULE_TETRAMINO_H__
 
 #include "Module.h"
+
 
 #define MAX_ENEMIES 100
 

@@ -3,9 +3,18 @@
 
 #include "p2Point.h"
 #include "Animation.h"
+#include "Tiles.h"
 
 struct SDL_Texture;
 struct Collider;
+enum class Tetramino_Orientation
+{
+	RIGHT,
+	DOWN,
+	LEFT, 
+	UP,
+
+};
 
 class Tetramino
 {
@@ -55,6 +64,7 @@ protected:
 
 	// Original spawn position. Stored for movement calculations
 	iPoint spawnPos;
+
 };
 
 #endif // __TETRAMINO_H__

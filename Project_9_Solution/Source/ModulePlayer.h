@@ -39,7 +39,8 @@ public:
 	iPoint position;
 
 	// The speed in which we move the player (pixels per frame)
-	int speed = 0;
+	int spdx = 0;
+	int spdy = 1;
 
 	// The player spritesheet loaded into an SDL_Texture
 	SDL_Texture* texture = nullptr;
@@ -57,7 +58,8 @@ public:
 	Collider* collider = nullptr;
 
 	// A flag to detect when the player has been destroyed
-	bool destroyed = false;
+	bool MovablePiece;
+	bool gameOver = false;
 
 	// Sound effects indices
 	uint laserFx = 0;

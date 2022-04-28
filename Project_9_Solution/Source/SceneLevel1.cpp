@@ -29,11 +29,11 @@ bool SceneLevel1::Start()
 	App->audio->PlayMusic("Assets/Music/02-Loginska.ogg", 1.0f);
 
 	//Bottomside collider
-	App->collisions->AddCollider({ 0, 224, 3930, 16 }, Collider::Type::WALL);
+	App->collisions->AddCollider({ 0, 0, 32, 160 }, Collider::Type::WALL);
 
 	//First two columns colliders
-	App->collisions->AddCollider({ 1375, 0, 111, 96 }, Collider::Type::WALL);
-	App->collisions->AddCollider({ 1375, 145, 111, 96 }, Collider::Type::WALL);
+	App->collisions->AddCollider({ 0, 200, 335, 39 }, Collider::Type::WALL);
+	App->collisions->AddCollider({ 112, 40, 112, 160 }, Collider::Type::WALL);
 
 	// Enemies ---
 	/*App->enemies->AddEnemy(Enemy_Type::REDBIRD, 600, 80);

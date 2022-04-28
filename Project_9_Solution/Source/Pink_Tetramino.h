@@ -3,6 +3,7 @@
 
 #include "Tetramino.h"
 #include "Path.h"
+#include "Tiles.h"
 
 class Pink_Tetramino : public Tetramino
 {
@@ -17,7 +18,7 @@ public:
 
 private:
 	
-	SDL_Rect* piece[4];
+	SDL_Rect* piece;
 
 };
 

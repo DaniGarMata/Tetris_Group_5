@@ -1,23 +1,27 @@
 #ifndef __TILES_H__
 #define __TILES_H__
 
+#include "SDL/include/SDL_rect.h"
+
 class Tiles {
 
 private:
 
-	uint x, y;
+	int x, y;
 
 	SDL_Rect* tile = nullptr;
 
-	bool isOccupied;
+	bool isOccupied = false;
 
 public:
 
-	Tiles(uint x0, uint y0, bool isOccupied0);
+	Tiles(int x0, int y0);
 
 	~Tiles();
 
 	void Occupy(SDL_Rect* occupTile);
+
+	void Unoccupy(Tiles* tiletoOccupy);
 
 };
 

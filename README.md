@@ -9,7 +9,7 @@ This is a recreation of the arcade version of Atari Tetris.
 ## Installation
 TODO: Describe the installation process
 ## Usage
-Ctrl - Rotate Tetramino
+Space - Rotate Tetramino
 Down arrow key - Speed up the tetramino fall
 Left and right arrow keys - Move the Tetramino to the corresponding side
 ## History
