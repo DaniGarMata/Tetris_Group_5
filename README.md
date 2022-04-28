@@ -1,15 +1,17 @@
 # Tetris_Group_5
-TODO: Write a project description
+https://github.com/DaniGarMata/Tetris_Group_5
+Team Members:
+Dani García - https://github.com/DaniGarMata
+Sergio Garríguez - https://github.com/SergioGarriguez
+Kaede Sato - https://github.com/KelptheWriter
+
+This is a recreation of the arcade version of Atari Tetris. 
 ## Installation
 TODO: Describe the installation process
 ## Usage
-TODO: Write usage instructions
-## Contributing
-1. Fork it!
-2. Create your feature branch: `git checkout -b my-newfeature`
-3. Commit your changes: `git commit -am 'Add some feature'`
-4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
+Ctrl - Rotate Tetramino
+Down arrow key - Speed up the tetramino fall
+Left and right arrow keys - Move the Tetramino to the corresponding side
 ## History
 TODO: Write history
 ## Credits
