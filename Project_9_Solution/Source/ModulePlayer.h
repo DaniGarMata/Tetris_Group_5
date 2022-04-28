@@ -80,7 +80,7 @@ public:
 
 	//Current Tetramino
 	Tetramino* current;
-	Tiles* board[20][10];
+	Tiles* board[10][20];
 };
 
 #endif //!__MODULE_PLAYER_H__
