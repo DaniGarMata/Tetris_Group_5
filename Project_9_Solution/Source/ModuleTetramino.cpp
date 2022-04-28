@@ -14,18 +14,18 @@
 #define SPAWN_MARGIN 50
 
 
-ModuleEnemies::ModuleEnemies(bool startEnabled) : Module(startEnabled)
+ModuleTetramino::ModuleTetramino(bool startEnabled) : Module(startEnabled)
 {
 	for(uint i = 0; i < MAX_ENEMIES; ++i)
-		enemies[i] = nullptr;
+		tetramino[i] = nullptr;
 }
 
-ModuleEnemies::~ModuleEnemies()
+ModuleTetramino::~ModuleTetramino()
 {
 
 }
 
-bool ModuleEnemies::Start()
+bool ModuleTetramino::Start()
 {
 	texture = App->textures->Load("Assets/Sprites/Tetramino.png");
 	tetraminoDestroyedFx = App->audio->LoadFx("Assets/Fx/explosion.wav");
@@ -34,7 +34,7 @@ bool ModuleEnemies::Start()
 }
 
 
-Update_Status ModuleEnemies::PreUpdate()
+Update_Status ModuleTetramino::PreUpdate()
 {
 	// Remove all enemies scheduled for deletion
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
@@ -49,9 +49,9 @@ Update_Status ModuleEnemies::PreUpdate()
 	return Update_Status::UPDATE_CONTINUE;
 }
 
-Update_Status ModuleEnemies::Update()
+Update_Status ModuleTetramino::Update()
 {
-	HandleEnemiesSpawn();
+//	HandleEnemiesSpawn();
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
@@ -59,12 +59,12 @@ Update_Status ModuleEnemies::Update()
 			enemies[i]->Update();*/
 	}
 
-	HandleEnemiesDespawn();
+	//HandleEnemiesDespawn();
 
 	return Update_Status::UPDATE_CONTINUE;
 }
 
-Update_Status ModuleEnemies::PostUpdate()
+Update_Status ModuleTetramino::PostUpdate()
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
@@ -76,7 +76,7 @@ Update_Status ModuleEnemies::PostUpdate()
 }
 
 // Called before quitting
-bool ModuleEnemies::CleanUp()
+bool ModuleTetramino::CleanUp()
 {
 	LOG("Freeing all enemies");
 
@@ -92,89 +92,89 @@ bool ModuleEnemies::CleanUp()
 	return true;
 }
 
-bool ModuleEnemies::AddEnemy(Enemy_Type type, int x, int y)
-{
-	bool ret = false;
+//bool ModuleTetramino::AddEnemy(Enemy_Type type, int x, int y)
+//{
+//	bool ret = false;
+//
+//	for(uint i = 0; i < MAX_ENEMIES; ++i)
+//	{
+//		if(spawnQueue[i].type == Enemy_Type::NO_TYPE)
+//		{
+//			spawnQueue[i].type = type;
+//			spawnQueue[i].x = x;
+//			spawnQueue[i].y = y;
+//			ret = true;
+//			break;
+//		}
+//	}
+//
+//	return ret;
+//}
 
-	for(uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if(spawnQueue[i].type == Enemy_Type::NO_TYPE)
-		{
-			spawnQueue[i].type = type;
-			spawnQueue[i].x = x;
-			spawnQueue[i].y = y;
-			ret = true;
-			break;
-		}
-	}
+//void ModuleTetramino::HandleEnemiesSpawn()
+//{
+//	// Iterate all the enemies queue
+//	for (uint i = 0; i < MAX_ENEMIES; ++i)
+//	{
+//		if (spawnQueue[i].type != Tetramino_Type::NO_TYPE)
+//		{
+//			// Spawn a new enemy if the screen has reached a spawn position
+//			if (spawnQueue[i].x * SCREEN_SIZE < App->render->camera.x + (App->render->camera.w * SCREEN_SIZE) + SPAWN_MARGIN)
+//			{
+//				LOG("Spawning enemy at %d", spawnQueue[i].x * SCREEN_SIZE);
+//
+//				SpawnEnemy(spawnQueue[i]);
+//				spawnQueue[i].type = Enemy_Type::NO_TYPE; // Removing the newly spawned enemy from the queue
+//			}
+//		}
+//	}
+//}
 
-	return ret;
-}
+//void ModuleTetramino::HandleEnemiesDespawn()
+//{
+//	// Iterate existing enemies
+//	for (uint i = 0; i < MAX_ENEMIES; ++i)
+//	{
+//		//if (enemies[i] != nullptr)
+//		//{
+//		//	// Delete the enemy when it has reached the end of the screen
+//		//	if (enemies[i]->position.x * SCREEN_SIZE < (App->render->camera.x) - SPAWN_MARGIN)
+//		//	{
+//		//		LOG("DeSpawning enemy at %d", enemies[i]->position.x * SCREEN_SIZE);
+//
+//		//		enemies[i]->SetToDelete();
+//		/*	}*/
+//	/*	}*/
+//	}
+//}
 
-void ModuleEnemies::HandleEnemiesSpawn()
-{
-	// Iterate all the enemies queue
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if (spawnQueue[i].type != Enemy_Type::NO_TYPE)
-		{
-			// Spawn a new enemy if the screen has reached a spawn position
-			if (spawnQueue[i].x * SCREEN_SIZE < App->render->camera.x + (App->render->camera.w * SCREEN_SIZE) + SPAWN_MARGIN)
-			{
-				LOG("Spawning enemy at %d", spawnQueue[i].x * SCREEN_SIZE);
+//void ModuleTetramino::SpawnEnemy(const EnemySpawnpoint& info)
+//{
+//	// Find an empty slot in the enemies array
+//	for (uint i = 0; i < MAX_ENEMIES; ++i)
+//	{
+//		if (tetramino[i] == nullptr)
+//		{
+//			/*switch (info.type)
+//			{
+//				case Enemy_Type::REDBIRD:
+//					enemies[i] = new Enemy_RedBird(info.x, info.y);
+//					break;
+//				case Enemy_Type::BROWNSHIP:
+//					enemies[i] = new Enemy_BrownShip(info.x, info.y);
+//					break;
+//				case Enemy_Type::MECH:
+//					enemies[i] = new Enemy_Mech(info.x, info.y);
+//					break;
+//			}
+//			enemies[i]->texture = texture;
+//			enemies[i]->destroyedFx = enemyDestroyedFx;
+//			break;*/
+//		}
+//	}
+//}
 
-				SpawnEnemy(spawnQueue[i]);
-				spawnQueue[i].type = Enemy_Type::NO_TYPE; // Removing the newly spawned enemy from the queue
-			}
-		}
-	}
-}
-
-void ModuleEnemies::HandleEnemiesDespawn()
-{
-	// Iterate existing enemies
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		//if (enemies[i] != nullptr)
-		//{
-		//	// Delete the enemy when it has reached the end of the screen
-		//	if (enemies[i]->position.x * SCREEN_SIZE < (App->render->camera.x) - SPAWN_MARGIN)
-		//	{
-		//		LOG("DeSpawning enemy at %d", enemies[i]->position.x * SCREEN_SIZE);
-
-		//		enemies[i]->SetToDelete();
-		/*	}*/
-	/*	}*/
-	}
-}
-
-void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
-{
-	// Find an empty slot in the enemies array
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if (enemies[i] == nullptr)
-		{
-			/*switch (info.type)
-			{
-				case Enemy_Type::REDBIRD:
-					enemies[i] = new Enemy_RedBird(info.x, info.y);
-					break;
-				case Enemy_Type::BROWNSHIP:
-					enemies[i] = new Enemy_BrownShip(info.x, info.y);
-					break;
-				case Enemy_Type::MECH:
-					enemies[i] = new Enemy_Mech(info.x, info.y);
-					break;
-			}
-			enemies[i]->texture = texture;
-			enemies[i]->destroyedFx = enemyDestroyedFx;
-			break;*/
-		}
-	}
-}
-
-void ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
+void ModuleTetramino::OnCollision(Collider* c1, Collider* c2)
 {
 	for(uint i = 0; i < MAX_ENEMIES; ++i)
 	{

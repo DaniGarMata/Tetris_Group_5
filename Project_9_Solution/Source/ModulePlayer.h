@@ -4,6 +4,8 @@
 #include "Module.h"
 #include "Animation.h"
 #include "p2Point.h"
+#include "Tetramino.h"
+#include "Tiles.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -75,6 +77,10 @@ public:
 	char linesText[10] = { "\0" };
 	char linesLeftText[10] = { "\0" };
 	char roundText[10] = { "\0" };
+
+	//Current Tetramino
+	Tetramino* current;
+	Tiles* board[20][10];
 };
 
 #endif //!__MODULE_PLAYER_H__

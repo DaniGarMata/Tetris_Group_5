@@ -10,7 +10,7 @@
 #include "SceneIntro2.h"
 #include "SceneLevel1.h"
 #include "ModuleParticles.h"
-#include "ModuleEnemies.h"
+#include "ModuleTetramino.h"
 #include "ModuleCollisions.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleFonts.h"
@@ -32,7 +32,7 @@ Application::Application()
 	modules[6] =	sceneLevel_1 =	new SceneLevel1(false);		//Gameplay scene starts disabled
 	modules[7] =	player =		new ModulePlayer(false);	//Player starts disabled
 	modules[8] =	particles =		new ModuleParticles(true);
-	modules[9] =	enemies =		new ModuleEnemies(false);	//Enemies start disabled
+	modules[9] =	tetramino =		new ModuleTetramino(false);	//Enemies start disabled
 
 	modules[10] =	collisions =	new ModuleCollisions(true);
 	modules[11] =	fade =			new ModuleFadeToBlack(true);

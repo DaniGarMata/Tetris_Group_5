@@ -26,14 +26,14 @@ struct EnemySpawnpoint
 class Tetramino;
 struct SDL_Texture;
 
-class ModuleEnemies : public Module
+class ModuleTetramino : public Module
 {
 public:
 	// Constructor
-	ModuleEnemies(bool startEnabled);
+	ModuleTetramino(bool startEnabled);
 
 	// Destructor
-	~ModuleEnemies();
+	~ModuleTetramino();
 
 	// Called when the module is activated
 	// Loads the necessary textures for the enemies

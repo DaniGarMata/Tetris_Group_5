@@ -16,7 +16,7 @@ class SceneIntro2;
 class SceneLevel1;
 class ModuleParticles;
 class ModuleCollisions;
-class ModuleEnemies;
+class ModuleTetramino;
 class ModuleFadeToBlack;
 class ModuleFonts;
 class ModuleRender;
@@ -57,7 +57,7 @@ public:
 	SceneIntro2* sceneIntro_2 = nullptr;
 	SceneLevel1* sceneLevel_1 = nullptr;
 
-	ModuleEnemies* enemies = nullptr;
+	ModuleTetramino* tetramino = nullptr;
 	ModuleParticles* particles = nullptr;
 
 	ModuleCollisions* collisions = nullptr;

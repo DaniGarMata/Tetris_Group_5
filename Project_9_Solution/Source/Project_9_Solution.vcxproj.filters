@@ -23,7 +23,7 @@
     <Filter Include="Source Files\Modules\Gameplay">
       <UniqueIdentifier>{25d307e8-c01f-47cf-a67c-44f768010c32}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Entities\Enemies">
+    <Filter Include="Source Files\Entities\Tetramino">
       <UniqueIdentifier>{c465321a-28ed-404a-aa97-e9d0c6f722ee}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -80,16 +80,16 @@
       <Filter>Source Files\Modules\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="Tetramino.h">
-      <Filter>Source Files\Entities\Enemies</Filter>
+      <Filter>Source Files\Entities\Tetramino</Filter>
     </ClInclude>
     <ClInclude Include="Pink_Tetramino.h">
-      <Filter>Source Files\Entities\Enemies</Filter>
+      <Filter>Source Files\Entities\Tetramino</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_Mech.h">
-      <Filter>Source Files\Entities\Enemies</Filter>
+      <Filter>Source Files\Entities\Tetramino</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_RedBird.h">
-      <Filter>Source Files\Entities\Enemies</Filter>
+      <Filter>Source Files\Entities\Tetramino</Filter>
     </ClInclude>
     <ClInclude Include="Path.h">
       <Filter>Source Files\Utils</Filter>
@@ -111,6 +111,9 @@
     </ClInclude>
     <ClInclude Include="SceneIntro2.h">
       <Filter>Source Files\Modules\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="Tiles.h">
+      <Filter>Source Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -160,16 +163,16 @@
       <Filter>Source Files\Modules\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="Tetramino.cpp">
-      <Filter>Source Files\Entities\Enemies</Filter>
+      <Filter>Source Files\Entities\Tetramino</Filter>
     </ClCompile>
     <ClCompile Include="Pink_Tetramino.cpp">
-      <Filter>Source Files\Entities\Enemies</Filter>
+      <Filter>Source Files\Entities\Tetramino</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_Mech.cpp">
-      <Filter>Source Files\Entities\Enemies</Filter>
+      <Filter>Source Files\Entities\Tetramino</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_RedBird.cpp">
-      <Filter>Source Files\Entities\Enemies</Filter>
+      <Filter>Source Files\Entities\Tetramino</Filter>
     </ClCompile>
     <ClCompile Include="Path.cpp">
       <Filter>Source Files\Utils</Filter>
@@ -191,6 +194,9 @@
     </ClCompile>
     <ClCompile Include="SceneIntro2.cpp">
       <Filter>Source Files\Modules\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="Tiles.cpp">
+      <Filter>Source Files\Utils</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
