@@ -21,6 +21,8 @@ public:
 	// Loads the necessary textures for the player
 	bool Start() override;
 
+	Update_Status PreUpdate() override;
+
 	// Called at the middle of the application loop
 	// Processes new input and handles player movement
 	Update_Status Update() override;
@@ -39,6 +41,10 @@ public:
 	// The speed in which we move the player (pixels per frame)
 	int speed = 1;
 
+	int ctr = 120;
+
+	int Tctr = 0;
+	int prov;
 
 	int col = 5;
 	int row = 0; //@@ la columna y la fila en la que se encuentra el bloque, siendo la columna 5 la inicial, son variables internas de player pero est·n sinncronizadas con la matriz
@@ -60,11 +66,11 @@ public:
 					  {0,0,0,0,0,0,0,0,0,0},
 					  {0,0,0,0,0,0,0,0,0,0},
 					  {0,0,0,0,0,0,0,0,0,0},
-					  {0,0,0,0,0,0,0,0,0,0},
-					  {0,0,0,0,0,0,0,0,0,0} };
-	//@@ la matriz que hace de mapa, intentÈ hacerla en una clase externa en la que se cambiasen los valores desde las funciones desde las funciones de Player y hubiese funciones que 
-	//@@limpiasen una fila, que comprobasen si alguna fila est· completa, que desplazasen todas las casillas ocupadas, que comprobasen si hay algun bloque en la fila superior... pero no 
-	//@@ me aclarÈ. 0 equivale a una casilla vacÌa, 1 serÌa la posiciÛn en la que se encuentra el bloque (cosa que pasa en partida) y 9 a una casilla ocupada(si cambias 0 por 9 habr·   
+					  {9,0,0,0,0,0,0,0,0,9},
+					  {9,9,9,9,9,9,0,9,9,9} };
+	//@@ la matriz que hace de mapa, intentÅEhacerla en una clase externa en la que se cambiasen los valores desde las funciones desde las funciones de Player y hubiese funciones que 
+	//@@limpiasen una fila, que comprobasen si alguna fila estÅEcompleta, que desplazasen todas las casillas ocupadas, que comprobasen si hay algun bloque en la fila superior... pero no 
+	//@@ me aclarÅE 0 equivale a una casilla vac˙}, 1 ser˙} la posiciÛn en la que se encuentra el bloque (cosa que pasa en partida) y 9 a una casilla ocupada(si cambias 0 por 9 habrÅE  
 	//@@ obstaculos en la partida), los numeros han sido elegidos arbitrariamente y no hace falta usar estos
 
 	bool enabled = true;  //@@ si la pieza se puede mover o no la H no es afectada

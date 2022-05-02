@@ -55,6 +55,23 @@ bool ModulePlayer::Start()
 	return ret;
 }
 
+Update_Status ModulePlayer::PreUpdate() {
+
+	if (enabled == false)
+	{
+
+		col = 5;
+
+		row = 0;
+
+		enabled = true;
+
+	}
+
+	return Update_Status::UPDATE_CONTINUE;
+
+}
+
 Update_Status ModulePlayer::Update()
 {
 	// Moving the player with the camera scroll
@@ -62,23 +79,24 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_A] == Key_State::KEY_DOWN)
 	{
+	
 		if (enabled == true)
 		{
-			
-			
+
+
 			if (col > 0)
 			{
 				//col = 0;
-				if (Map[row][col - 1] != 9)  //@@ comprueba si la siguiente casilla está ocupada por un 9 que sería el equivalente a un bloque ocupado
+				if (Map[row][col - 1] != 9)  //@@ comprueba si la siguiente casilla esta ocupada por un 9 que seria el equivalente a un bloque ocupado
 				{
 					Map[row][col] = 0;
 					col--;
 					position.x = col * 8 + 32; //@@ col*8 los pixeles por columna del campo de juego, +32 para que se posicione correctamente en el campo de juego
 					Map[row][col] = 1;
 				}
-				
+
 			}
-			
+
 		}
 		
 	}
@@ -93,7 +111,7 @@ Update_Status ModulePlayer::Update()
 			if (col < 9)
 			{
 				//col = 9;
-				if (Map[row][col + 1] != 9)  //@@ comprueba si la siguiente casilla está ocupada por un 9 que sería el equivalente a un bloque ocupado
+				if (Map[row][col + 1] != 9)  //@@ comprueba si la siguiente casilla estEocupada por un 9 que serú} el equivalente a un bloque ocupado
 				{
 					Map[row][col] = 0;
 					col++;
@@ -115,7 +133,7 @@ Update_Status ModulePlayer::Update()
 			if (row < 19)
 			{
 				//row = 19;
-				if (Map[row + 1][col] != 9)  //@@ comprueba si la siguiente casilla está ocupada por un 9 que sería el equivalente a un bloque desactivado, aunque de momento no haya representación grafica
+				if (Map[row + 1][col] != 9)  //@@ comprueba si la siguiente casilla estEocupada por un 9 que serú} el equivalente a un bloque desactivado, aunque de momento no haya representación grafica
 				{
 					Map[row][col] = 0;
 					row++;
@@ -134,7 +152,7 @@ Update_Status ModulePlayer::Update()
 				Map[row][col] = 9; //@@ deja la casilla como ocupada
 				enabled = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
 			}
-			//@@ comprobar las posibilidades de mobimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo había pensado en hacerlo con 4 de estos
+			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo habú} pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
 			//@@ que haya 4 activos al mismo tiempo
 		}
@@ -175,10 +193,94 @@ Update_Status ModulePlayer::Update()
 
 	// If no up/down movement detected, set the current animation back to idle
 	if (App->input->keys[SDL_SCANCODE_S] == Key_State::KEY_IDLE
-		&& App->input->keys[SDL_SCANCODE_W] == Key_State::KEY_IDLE)
-		currentAnimation = &idleAnim;
+		&& App->input->keys[SDL_SCANCODE_W] == Key_State::KEY_IDLE) {
+
+		if (enabled == true) {
+
+			if (ctr > 0) {
+
+				ctr--;
+
+			}
+
+			else {
+
+				if (row < 19)
+				{
+					//row = 19;
+					if (Map[row + 1][col] != 9)  //@@ comprueba si la siguiente casilla estEocupada por un 9 que serú} el equivalente a un bloque desactivado, aunque de momento no haya representación grafica
+					{
+						Map[row][col] = 0;
+						row++;
+						position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
+						Map[row][col] = 1;
+					}
+					else
+					{
+						Map[row][col] = 9; //@@ deja la casilla como ocupada
+						enabled = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
+					}
+
+				}
+				else
+				{
+					Map[row][col] = 9; //@@ deja la casilla como ocupada
+					enabled = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
+				}
+
+				ctr = 120;
+
+			}
+
+		}
+
+	}
+
 
 	collider->SetPos(position.x, position.y);
+
+	for (int i = 0; i < 20; i++) {
+
+		for (int j = 0; j < 10; j++) {
+
+			if (Map[i][j] == 9) {
+
+				Tctr++;
+
+				prov = i;
+
+				if (Tctr == 10) {
+
+					for (int k = 0; k < 10; k++) {
+
+						Map[prov][k] = 0;
+
+					}
+
+					for (int l = 0; l < prov; l++) {
+
+						for (int m = 0; m < 10; m++) {
+
+							if (Map[l][m] == 9) {
+
+								Map[l][m] = 0;
+								Map[l + 1][m] = 9;
+
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		Tctr = 0;
+
+	}
 
 	currentAnimation->Update();
 
@@ -191,6 +293,30 @@ Update_Status ModulePlayer::PostUpdate()
 	{
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
 		App->render->Blit(texture, position.x, position.y, &rect);
+	}
+
+	for (int i = 0; i < 20; i++) {
+
+		for (int j = 0; j < 10; j++) {
+
+			if (Map[i][j] == 9) {
+
+				SDL_Rect* tetramino = new SDL_Rect;
+
+				tetramino->h = 8;
+
+				tetramino->w = 8;
+
+				tetramino->x = 0;
+
+				tetramino->y = 0;
+
+				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
+
+			}
+
+		}
+
 	}
 
 	// Draw UI (score) --------------------------------------
