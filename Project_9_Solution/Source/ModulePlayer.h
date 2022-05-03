@@ -23,6 +23,8 @@ public:
 	// Loads the necessary textures for the player
 	bool Start() override;
 
+	Update_Status PreUpdate() override;
+
 	// Called at the middle of the application loop
 	// Processes new input and handles player movement
 	Update_Status Update() override;
@@ -30,6 +32,8 @@ public:
 	// Called at the end of the application loop
 	// Performs the render call of the player sprite
 	Update_Status PostUpdate() override;
+
+	void TetraminoCheck();
 
 	// Collision callback, called when the player intersects with another collider
 	void OnCollision(Collider* c1, Collider* c2) override;
@@ -58,19 +62,19 @@ public:
 	Collider* collider = nullptr;
 
 	// A flag to detect when the player has been destroyed
-	bool MovablePiece;
+	bool MovablePiece = true;
 	bool gameOver = false;
 
 	// Sound effects indices
 	uint laserFx = 0;
 	uint explosionFx = 0;
 
-	Tetramino_Orientation orientation = Tetramino_Orientation::RIGHT;
+	//Tetramino_Orientation orientation = Tetramino_Orientation::RIGHT;
 
 	// Font score index
 	uint score = 000;
 	uint hiscore = 000;
-	uint linesLeft = 000;
+	uint linesLeft = 005;
 	uint lines = 000;
 	uint round = 001;
 	int scoreFont = -1;
@@ -82,9 +86,41 @@ public:
 	char linesLeftText[10] = { "\0" };
 	char roundText[10] = { "\0" };
 
+	int ctr = 120;
+
+	int Tctr = 0;
+	int prov;
+
+	int col = 5;
+	int row = 0; //@@ la columna y la fila en la que se encuentra el bloque, siendo la columna 5 la inicial, son variables internas de player pero est疣 sinncronizadas con la matriz
+	int Map[20][10] = { {0,0,0,0,0,0,0,0,0,0},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {0,0,0,0,0,0,0,0,0,9},
+					  {9,0,0,0,0,0,0,0,0,9},
+					  {9,9,9,9,9,9,0,9,9,9} };
+	//@@ la matriz que hace de mapa, intent・hacerla en una clase externa en la que se cambiasen los valores desde las funciones desde las funciones de Player y hubiese funciones que 
+	//@@limpiasen una fila, que comprobasen si alguna fila est・completa, que desplazasen todas las casillas ocupadas, que comprobasen si hay algun bloque en la fila superior... pero no 
+	//@@ me aclar・ 0 equivale a una casilla vac僘, 1 ser僘 la posici en la que se encuentra el bloque (cosa que pasa en partida) y 9 a una casilla ocupada(si cambias 0 por 9 habr・  
+	//@@ obstaculos en la partida), los numeros han sido elegidos arbitrariamente y no hace falta usar estos
+
 	//Current Tetramino
-	Tetramino* current;
-	Tiles* board[10][20];
+	//Tetramino* current;
+	//Tiles* board[10][20];
 };
 
 #endif //!__MODULE_PLAYER_H__

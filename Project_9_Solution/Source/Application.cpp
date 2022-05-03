@@ -9,6 +9,7 @@
 #include "SceneIntro.h"
 #include "SceneIntro2.h"
 #include "SceneLevel1.h"
+#include "SceneGameOverScreen.h"
 #include "ModuleParticles.h"
 #include "ModuleTetramino.h"
 #include "ModuleCollisions.h"
@@ -30,15 +31,16 @@ Application::Application()
 	modules[4] =	sceneIntro =	new SceneIntro(true);
 	modules[5] =	sceneIntro_2 =	new SceneIntro2(false);
 	modules[6] =	sceneLevel_1 =	new SceneLevel1(false);		//Gameplay scene starts disabled
-	modules[7] =	player =		new ModulePlayer(false);	//Player starts disabled
-	modules[8] =	particles =		new ModuleParticles(true);
-	modules[9] =	tetramino =		new ModuleTetramino(false);	//Enemies start disabled
+	modules[7] =	sceneGameOver = new GameOverScreen(false);
+	modules[8] =	player =		new ModulePlayer(false);	//Player starts disabled
+	modules[9] =	particles =		new ModuleParticles(true);
+	modules[10] =	tetramino =		new ModuleTetramino(false);	//Enemies start disabled
 
-	modules[10] =	collisions =	new ModuleCollisions(true);
-	modules[11] =	fade =			new ModuleFadeToBlack(true);
-	modules[12] =	fonts =			new ModuleFonts(true);
+	modules[11] =	collisions =	new ModuleCollisions(true);
+	modules[12] =	fade =			new ModuleFadeToBlack(true);
+	modules[13] =	fonts =			new ModuleFonts(true);
 
-	modules[13] = 	render =		new ModuleRender(true);
+	modules[14] = 	render =		new ModuleRender(true);
 }
 
 Application::~Application()

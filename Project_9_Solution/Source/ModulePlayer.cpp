@@ -15,7 +15,7 @@
 ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 {
 	// idle animation - just one sprite
-	idleAnim.PushBack({ 0, 0, 16, 24 });
+	idleAnim.PushBack({ 0, 0, 8, 8 });
 	MovablePiece = true;
 
 }
@@ -32,7 +32,7 @@ bool ModulePlayer::Start()
 
 	bool ret = true;
 
-	texture = App->textures->Load("Assets/Sprites/PinkTetramino.png");
+	texture = App->textures->Load("Assets/Sprites/Tetramino.png");
 	currentAnimation = &idleAnim;
 
 	//laserFx = App->audio->LoadFx("Assets/Fx/laser.wav");
@@ -43,7 +43,7 @@ bool ModulePlayer::Start()
 
 	gameOver = false;
 
-	collider = App->collisions->AddCollider({ position.x, position.y, 16, 24 }, Collider::Type::PLAYER, this);
+	/*collider = App->collisions->AddCollider({ position.x, position.y, 16, 24 }, Collider::Type::PLAYER, this);*/
 
 	// TODO 0: Notice how a font is loaded and the meaning of all its arguments 
 	//char lookupTable[] = { "!  ,_./0123456789$;<&?abcdefghijklmnopqrstuvwxyz" };
@@ -55,73 +55,50 @@ bool ModulePlayer::Start()
 	HiscoreFont = App->fonts->Load("Assets/Fonts/FontBlue.png", lookupTable, 1);
 	linesLeftFont = App->fonts->Load("Assets/Fonts/FontWhite.png", lookupTable, 1);
 
+	linesLeft = 5;
+
 	return ret;
+}
+
+Update_Status ModulePlayer::PreUpdate() {
+
+	if (MovablePiece == false)
+	{
+
+		col = 5;
+
+		row = 0;
+
+		MovablePiece = true;
+
+	}
+
+	return Update_Status::UPDATE_CONTINUE;
+
 }
 
 Update_Status ModulePlayer::Update()
 {
 	// Moving the player with the camera scroll
 
-	if (MovablePiece == true) {
 
-		if (App->input->keys[SDL_SCANCODE_LEFT] == Key_State::KEY_REPEAT)
+
+		if (App->input->keys[SDL_SCANCODE_LEFT] == Key_State::KEY_DOWN)
 		{
-
-			spdx = -1;
-
-			if ((position.x + spdx) > 32) {
+			if (MovablePiece == true)
+			{
 
 
-				position.x += (spdx);
-
-			}
-
-			else {
-
-				spdx = 0;
-
-				position.x = 32;
-
-			}
-
-		}
-
-		if (App->input->keys[SDL_SCANCODE_RIGHT] == Key_State::KEY_REPEAT)
-		{
-
-			spdx = 1;
-
-			if (orientation == Tetramino_Orientation::UP|| orientation == Tetramino_Orientation::DOWN) {
-
-				if ((position.x + spdx) <= (112 - 24)) {
-
-					position.x += (spdx);
-
-				}
-
-				else {
-
-					spdx = 0;
-
-					position.x = (112 - 24);
-
-				}
-
-			}
-
-			else {
-
-				if ((position.x + spdx) <= (112 - 16)) {
-
-					position.x += (spdx);
-
-				}
-
-				else {
-
-					spdx = 0;
-
-					position.x = (112 - 16);
+				if (col > 0)
+				{
+					//col = 0;
+					if (Map[row][col - 1] != 9)  //@@ comprueba si la siguiente casilla esta ocupada por un 9 que seria el equivalente a un bloque ocupado
+					{
+						Map[row][col] = 0;
+						col--;
+						position.x = col * 8 + 32; //@@ col*8 los pixeles por columna del campo de juego, +32 para que se posicione correctamente en el campo de juego
+						Map[row][col] = 1;
+					}
 
 				}
 
@@ -129,82 +106,132 @@ Update_Status ModulePlayer::Update()
 
 		}
 
-		if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
+		if (App->input->keys[SDL_SCANCODE_RIGHT] == Key_State::KEY_DOWN)
 		{
-			spdy = 2;
-			position.y += (spdy);
+
+			if (MovablePiece == true)
+			{
+
+				if (col < 9)
+				{
+					//col = 9;
+					if (Map[row][col + 1] != 9)  //@@ comprueba si la siguiente casilla estEocupada por un 9 que serú} el equivalente a un bloque ocupado
+					{
+						Map[row][col] = 0;
+						col++;
+						position.x = col * 8 + 32; //@@ col*8 los pixeles por columna del campo de juego, +32 para que se posicione correctamente en el campo de juego
+						Map[row][col] = 1;
+					}
+
+				}
+
+			}
+
+		}
+
+		if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+		{
+
+			if (MovablePiece == true)
+			{
+				if (row < 19)
+				{
+					//row = 19;
+					if (Map[row + 1][col] != 9)  //@@ comprueba si la siguiente casilla estEocupada por un 9 que serú} el equivalente a un bloque desactivado, aunque de momento no haya representación grafica
+					{
+						Map[row][col] = 0;
+						row++;
+						position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
+						Map[row][col] = 1;
+					}
+					else
+					{
+						Map[row][col] = 9; //@@ deja la casilla como ocupada
+						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
+						score = score + 2;
+					}
+
+				}
+				else
+				{
+					Map[row][col] = 9; //@@ deja la casilla como ocupada
+					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
+					score = score + 2;
+				}
+				//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo habú} pensado en hacerlo con 4 de estos
+				//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
+				//@@ que haya 4 activos al mismo tiempo
+			}
 
 		}
 
 		if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 		{
-			int prov;
-
-			prov = idleAnim.frames->h;
-
-			idleAnim.frames->h = idleAnim.frames->w;
-
-			idleAnim.frames->w = prov;
-
-			collider->rect.h = idleAnim.frames->h;
-
-			collider->rect.w = idleAnim.frames->w;
-
-			switch (orientation) {
-
-			case Tetramino_Orientation::RIGHT:
-
-				idleAnim.frames->x = 0;
-
-				idleAnim.frames->y = 24;
-
-				orientation = Tetramino_Orientation::DOWN;
-
-				break;
-
-			case Tetramino_Orientation::LEFT:
-
-				idleAnim.frames->x = 24;
-
-				idleAnim.frames->y = 24;
-
-				orientation = Tetramino_Orientation::UP;
-
-				break;
-
-			case Tetramino_Orientation::UP:
-
-				idleAnim.frames->x = 0;
-
-				idleAnim.frames->y = 0;
-
-				orientation = Tetramino_Orientation::RIGHT;
-
-				break;
 
 
-			case Tetramino_Orientation::DOWN:
-
-				idleAnim.frames->x = 16;
-
-				idleAnim.frames->y = 0;
-
-				orientation = Tetramino_Orientation::LEFT;
-
-				break;
-
-			}
-
-			if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_IDLE) {
-
-				position.y += (spdy);
-
-			}
 		}
 
-	}
+		if (App->input->keys[SDL_SCANCODE_H] == Key_State::KEY_DOWN)  //@@ para subir el bloque y poder testear cosas
+		{
 
-	collider->SetPos(position.x, position.y);
+			if (row > 0)
+			{
+				//row = 0;
+
+				row--;
+				position.y = row * 8 + 40;  //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
+
+			}
+
+		}
+
+		if (App->input->keys[SDL_SCANCODE_S] == Key_State::KEY_IDLE) {
+
+			if (MovablePiece == true) {
+
+				if (ctr > 0) {
+
+					ctr--;
+
+				}
+
+				else {
+
+					if (row < 19)
+					{
+						//row = 19;
+						if (Map[row + 1][col] != 9)  //@@ comprueba si la siguiente casilla estEocupada por un 9 que serú} el equivalente a un bloque desactivado, aunque de momento no haya representación grafica
+						{
+							Map[row][col] = 0;
+							row++;
+							position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
+							Map[row][col] = 1;
+						}
+						else
+						{
+							Map[row][col] = 9; //@@ deja la casilla como ocupada
+							MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
+							score = score + 2;
+						}
+
+					}
+					else
+					{
+						Map[row][col] = 9; //@@ deja la casilla como ocupada
+						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
+						score = score + 2;
+					}
+
+					ctr = 120;
+
+				}
+
+			}
+
+		}
+
+
+	/*collider->SetPos(position.x, position.y);*/
 
 	currentAnimation->Update();
 
@@ -213,6 +240,30 @@ Update_Status ModulePlayer::Update()
 
 Update_Status ModulePlayer::PostUpdate()
 {
+	for (int i = 0; i < 20; i++) {
+
+		for (int j = 0; j < 10; j++) {
+
+			if (Map[i][j] == 9) {
+
+				SDL_Rect* tetramino = new SDL_Rect;
+
+				tetramino->h = 8;
+
+				tetramino->w = 8;
+
+				tetramino->x = 0;
+
+				tetramino->y = 0;
+
+				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
+
+			}
+
+		}
+
+	}
+
 	if (!gameOver)
 	{
 		SDL_Rect rect = currentAnimation->GetCurrentFrame();
@@ -241,6 +292,65 @@ Update_Status ModulePlayer::PostUpdate()
 	App->fonts->BlitText(128, 207, HiscoreFont, "round");
 
 	return Update_Status::UPDATE_CONTINUE;
+}
+
+void ModulePlayer::TetraminoCheck() {
+
+	for (int i = 0; i < 20; i++) {
+
+		for (int j = 0; j < 10; j++) {
+
+			if (Map[i][j] == 9) {
+
+				Tctr++;
+
+				prov = i;
+
+				if (Tctr == 10) {
+
+					for (int k = 0; k < 10; k++) {
+
+						Map[prov][k] = 0;
+
+					}
+
+					for (int l = 0; l < prov; l++) {
+
+						for (int m = 0; m < 10; m++) {
+
+							if (Map[l][m] == 9) {
+
+								Map[l][m] = 0;
+								Map[l + 1][m] = 9;
+
+								lines = lines + ((uint)1);
+
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+		Tctr = 0;
+
+	}
+
+	for (int i = 0; i < 10; i++) {
+
+		if (Map[0][i] == 9) {
+
+			gameOver = true;
+
+		}
+
+	}
+
 }
 
 void ModulePlayer::OnCollision(Collider* c1, Collider* c2)
