@@ -310,27 +310,46 @@ void ModulePlayer::TetraminoCheck() {
 
 					for (int k = 0; k < 10; k++) {
 
-						Map[prov][k] = 0;
+							Map[prov][k] = 0;
 
 					}
 
-					for (int l = 0; l < prov; l++) {
+					prov--;
 
-						for (int m = 0; m < 10; m++) {
+					for (prov; prov >= 0; prov--) {
 
-							if (Map[l][m] == 9) {
+						for (int k = 0; k < 10; k++) {
 
-								Map[l][m] = 0;
-								Map[l + 1][m] = 9;
+							if (Map[prov][k] == 9) {
 
-								lineIsMade = true;
+								Map[prov][k] = 0;
+								Map[prov + 1][k] = 9;
 
 							}
 
 						}
+					
 
 					}
 
+					lineIsMade = true;
+					//for (int l = prov; l <= 0; l--) {
+
+					//	for (int m = 0; m < 10; m++) {
+
+					//		if (Map[(l - 1)][m] == 9) {
+
+					//			Map[l][m] = 0;
+					//			Map[l][m] = 9;
+
+					//			lineIsMade = true;
+
+					//		}
+
+					//	}
+
+					//}
+					Tctr = 0;
 				}
 
 			}

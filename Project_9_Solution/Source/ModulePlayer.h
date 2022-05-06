@@ -111,8 +111,8 @@ public:
 					  {0,0,0,0,0,0,0,0,0,9},
 					  {0,0,0,0,0,0,0,0,0,9},
 					  {0,0,0,0,0,0,0,0,0,9},
-					  {0,0,0,0,0,0,0,0,0,9},
-					  {9,0,0,0,0,0,0,0,0,9},
+					  {9,9,9,9,9,9,0,9,9,9},
+					  {9,9,9,9,9,9,0,9,9,9},
 					  {9,9,9,9,9,9,0,9,9,9} };
 	//@@ la matriz que hace de mapa, intentÅEhacerla en una clase externa en la que se cambiasen los valores desde las funciones desde las funciones de Player y hubiese funciones que 
 	//@@limpiasen una fila, que comprobasen si alguna fila estÅEcompleta, que desplazasen todas las casillas ocupadas, que comprobasen si hay algun bloque en la fila superior... pero no 
