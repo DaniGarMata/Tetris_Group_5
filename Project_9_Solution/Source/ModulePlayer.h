@@ -86,6 +86,7 @@ public:
 	char linesLeftText[10] = { "\0" };
 	char roundText[10] = { "\0" };
 	bool lineIsMade;
+	bool nextLevel;
 
 	int ctr = 120;
 
@@ -109,11 +110,11 @@ public:
 					  {0,0,0,0,0,0,0,0,0,9},
 					  {0,0,0,0,0,0,0,0,0,9},
 					  {0,0,0,0,0,0,0,0,0,9},
-					  {0,0,0,0,0,0,0,0,0,9},
-					  {0,0,0,0,0,0,0,0,0,9},
 					  {9,9,9,9,9,9,0,9,9,9},
-					  {9,9,9,9,9,9,0,9,9,9},
-					  {9,9,9,9,9,9,0,9,9,9} };
+					  {9,9,9,9,9,9,9,9,9,9},
+					  {9,9,9,9,9,9,9,9,9,9},
+					  {9,9,9,9,9,9,9,9,9,9},
+					  {9,9,9,9,9,9,9,9,9,9} };
 	//@@ la matriz que hace de mapa, intent・hacerla en una clase externa en la que se cambiasen los valores desde las funciones desde las funciones de Player y hubiese funciones que 
 	//@@limpiasen una fila, que comprobasen si alguna fila est・completa, que desplazasen todas las casillas ocupadas, que comprobasen si hay algun bloque en la fila superior... pero no 
 	//@@ me aclar・ 0 equivale a una casilla vac僘, 1 ser僘 la posici en la que se encuentra el bloque (cosa que pasa en partida) y 9 a una casilla ocupada(si cambias 0 por 9 habr・  

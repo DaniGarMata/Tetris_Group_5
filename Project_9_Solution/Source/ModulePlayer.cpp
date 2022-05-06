@@ -17,6 +17,7 @@ ModulePlayer::ModulePlayer(bool startEnabled) : Module(startEnabled)
 	// idle animation - just one sprite
 	idleAnim.PushBack({ 0, 0, 8, 8 });
 	MovablePiece = true;
+	nextLevel = false;
 
 }
 
@@ -360,8 +361,15 @@ void ModulePlayer::TetraminoCheck() {
 
 			lines = lines++;
 			linesLeft = linesLeft--;
+			score = score + (10 * 2);
 
 			lineIsMade = false;
+
+			if (linesLeft == 0) {
+
+				nextLevel = true;
+
+			}
 			
 		}
 

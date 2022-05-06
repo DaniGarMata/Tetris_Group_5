@@ -70,6 +70,12 @@ Update_Status SceneLevel1::Update()
 
 	}
 
+	if (App->player->nextLevel == true) {
+
+		App->fade->FadeToBlack(this, (Module*)App->sceneLevel_2, 90);
+
+	}
+
 	return Update_Status::UPDATE_CONTINUE;
 }
 
