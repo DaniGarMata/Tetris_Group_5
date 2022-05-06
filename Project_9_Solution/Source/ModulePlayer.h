@@ -85,6 +85,7 @@ public:
 	char linesText[10] = { "\0" };
 	char linesLeftText[10] = { "\0" };
 	char roundText[10] = { "\0" };
+	bool lineIsMade;
 
 	int ctr = 120;
 

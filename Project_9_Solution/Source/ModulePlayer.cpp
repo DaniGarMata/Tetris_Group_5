@@ -323,7 +323,7 @@ void ModulePlayer::TetraminoCheck() {
 								Map[l][m] = 0;
 								Map[l + 1][m] = 9;
 
-								lines = lines + ((uint)1);
+								lineIsMade = true;
 
 							}
 
@@ -335,6 +335,15 @@ void ModulePlayer::TetraminoCheck() {
 
 			}
 
+		}
+		
+		if (lineIsMade == true) {
+
+			lines = lines++;
+			linesLeft = linesLeft--;
+
+			lineIsMade = false;
+			
 		}
 
 		Tctr = 0;
