@@ -27,7 +27,7 @@ bool SceneLevel2::Start()
 	bool ret = true;
 
 	bgTexture = App->textures->Load("Assets/Sprites/Play_Screen.png");
-	App->audio->PlayMusic("Assets/Music/02-Loginska.ogg", 1.0f);
+	App->audio->PlayMusic("Assets/Music/04-Bradinsky.ogg", 1.0f);
 
 	App->render->camera.x = 0;
 	App->render->camera.y = 0;

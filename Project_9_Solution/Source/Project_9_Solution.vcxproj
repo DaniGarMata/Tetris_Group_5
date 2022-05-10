@@ -81,6 +81,7 @@
     <ClInclude Include="SceneGameOverScreen.h" />
     <ClInclude Include="SceneIntro2.h" />
     <ClInclude Include="SceneLevel2.h" />
+    <ClInclude Include="SceneScoreBoard.h" />
     <ClInclude Include="Tetramino.h" />
     <ClInclude Include="Pink_Tetramino.h" />
     <ClInclude Include="Enemy_Mech.h" />
@@ -113,6 +114,7 @@
     <ClCompile Include="SceneGameOverScreen.cpp" />
     <ClCompile Include="SceneIntro2.cpp" />
     <ClCompile Include="SceneLevel2.cpp" />
+    <ClCompile Include="SceneScoreBoard.cpp" />
     <ClCompile Include="Tetramino.cpp" />
     <ClCompile Include="Pink_Tetramino.cpp" />
     <ClCompile Include="Enemy_Mech.cpp" />
