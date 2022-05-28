@@ -115,6 +115,12 @@
     <ClInclude Include="Tiles.h">
       <Filter>Source Files\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="SceneGameOverScreen.h">
+      <Filter>Source Files\Modules\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneLevel2.h">
+      <Filter>Source Files\Modules\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Module.cpp">
@@ -197,6 +203,12 @@
     </ClCompile>
     <ClCompile Include="Tiles.cpp">
       <Filter>Source Files\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneGameOverScreen.cpp">
+      <Filter>Source Files\Modules\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneLevel2.cpp">
+      <Filter>Source Files\Modules\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
