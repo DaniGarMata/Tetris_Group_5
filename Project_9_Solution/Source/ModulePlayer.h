@@ -8,6 +8,11 @@
 #include "Tiles.h"
 
 
+#include "SDL/include/SDL.h"
+#pragma comment( lib, "SDL/libx86/SDL2.lib" )
+#pragma comment( lib, "SDL/libx86/SDL2main.lib" )
+
+
 struct SDL_Texture;
 struct Collider;
 
@@ -114,7 +119,9 @@ public:
 	
 	bool LineCompleted = false;
 
-	int TIME_CTR = 120;
+	int TIME_CTR = 60;
+
+	int time1;
 
 	int ctr = TIME_CTR;
 

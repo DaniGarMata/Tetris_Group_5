@@ -62,7 +62,7 @@ bool ModulePlayer::Start()
 
 	bool ret = true;
 
-	texture = App->textures->Load("Assets/Sprites/Tetriminosheet-export-1.png");
+	texture = App->textures->Load("Assets/Sprites/Tetriminosheet.png");
 	currentAnimation = &idleAnim;
 
 	//laserFx = App->audio->LoadFx("Assets/Fx/laser.wav");
@@ -3512,6 +3512,7 @@ Update_Status ModulePlayer::Update()
 		PieceType = (rand() % 7) + 1;
 		PieceState = 0;
 
+		LineCompleted = false;
 
 
 	}
@@ -4227,12 +4228,109 @@ Update_Status ModulePlayer::PostUpdate()
 
 				tetramino->h = 8;
 				tetramino->w = 8;
-				tetramino->x = 0;
+				tetramino->x = 120;
+				tetramino->y = 0;
+
+				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
+
+			}
+			if (Map[i][j] == 201) {
+
+				SDL_Rect* tetramino = new SDL_Rect;
+
+				tetramino->h = 8;
+				tetramino->w = 8;
+				tetramino->x = 120;
+				tetramino->y = 8;
+
+				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
+
+			}
+			if (Map[i][j] == 202) {
+
+				SDL_Rect* tetramino = new SDL_Rect;
+
+				tetramino->h = 8;
+				tetramino->w = 8;
+				tetramino->x = 120;
+				tetramino->y = 16;
+
+				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
+
+			}
+			if (Map[i][j] == 203) {
+
+				SDL_Rect* tetramino = new SDL_Rect;
+
+				tetramino->h = 8;
+				tetramino->w = 8;
+				tetramino->x = 120;
+				tetramino->y = 24;
+
+				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
+
+			}
+			if (Map[i][j] == 204) {
+
+				SDL_Rect* tetramino = new SDL_Rect;
+
+				tetramino->h = 8;
+				tetramino->w = 8;
+				tetramino->x = 120;
+				tetramino->y = 32;
+
+				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
+
+			}
+			if (Map[i][j] == 205) {
+
+				SDL_Rect* tetramino = new SDL_Rect;
+
+				tetramino->h = 8;
+				tetramino->w = 8;
+				tetramino->x = 120;
 				tetramino->y = 40;
 
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
+			if (Map[i][j] == 206) {
+
+				SDL_Rect* tetramino = new SDL_Rect;
+
+				tetramino->h = 8;
+				tetramino->w = 8;
+				tetramino->x = 120;
+				tetramino->y = 48;
+
+				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
+
+			}
+			if (Map[i][j] == 207) {
+
+				SDL_Rect* tetramino = new SDL_Rect;
+
+				tetramino->h = 8;
+				tetramino->w = 8;
+				tetramino->x = 120;
+				tetramino->y = 56;
+
+				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
+
+			}
+			if (Map[i][j] == 208) {
+
+				SDL_Rect* tetramino = new SDL_Rect;
+
+				tetramino->h = 8;
+				tetramino->w = 8;
+				tetramino->x = 120;
+				tetramino->y = 64;
+
+				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
+
+			}
+			
 
 
 		}
@@ -4281,67 +4379,85 @@ void ModulePlayer::TetraminoCheck() {
 
 				prov = i;
 
-				if (Tctr == 10 && LineCompleted == true) {
-				
-					for (int k = 0; k < 10; k++) {
-				
-							Map[prov][k] = 0;
-				
-					}
-				
-					prov--;
-				
-					for (prov; prov >= 0; prov--) {
-				
-						for (int k = 0; k < 10; k++) {
-				
-							if (Map[prov][k] != 0) {
-				
-								int get_piece = Map[prov][k];
-				
-								if (get_piece == 105 && prov> i-2)
-								{
-									get_piece = 94;
-								}
-								else if (get_piece == 96 && prov > i - 2)
-								{
-									get_piece = 97;
-								}
-				
-								Map[prov][k] = 0;
-								Map[prov + 1][k] = get_piece;
-				
-							}
-				
-						}
-					
-				
-					}
-				
-					lineIsMade = true;
-					//for (int l = prov; l <= 0; l--) {
-				
-					//	for (int m = 0; m < 10; m++) {
-				
-					//		if (Map[(l - 1)][m] == 9) {
-				
-					//			Map[l][m] = 0;
-					//			Map[l][m] = 9;
-				
-					//			lineIsMade = true;
-				
-					//		}
-				
-					//	}
-				
-					//}
-					Tctr = 0;
-				}
+				//if (Tctr == 10 && LineCompleted == true) {
+				//
+				//	int time2 = SDL_GetTicks();
+				//	float seconds = (time2 - time1) / 1000.0f;
+				//
+				//	if (seconds > 1.03f)
+				//	{
+				//		int RandomColor = (rand() % 9) + 200;
+				//
+				//		for (int k = 0; k < 10; k++) {
+				//
+				//			Map[prov][k] = RandomColor;
+				//
+				//		}
+				//	}
+				//
+				//	////for (int k = 0; k < 10; k++) {
+				//	////
+				//	////		Map[prov][k] = 0;
+				//	////
+				//	////}
+				//	////
+				//	////prov--;
+				//	////
+				//	////for (prov; prov >= 0; prov--) {
+				//	////
+				//	////	for (int k = 0; k < 10; k++) {
+				//	////
+				//	////		if (Map[prov][k] != 0) {
+				//	////
+				//	////			int get_piece = Map[prov][k];
+				//	////
+				//	////			if (get_piece == 105 && prov> i-2)
+				//	////			{
+				//	////				get_piece = 94;
+				//	////			}
+				//	////			else if (get_piece == 96 && prov > i - 2)
+				//	////			{
+				//	////				get_piece = 97;
+				//	////			}
+				//	////
+				//	////			Map[prov][k] = 0;
+				//	////			Map[prov + 1][k] = get_piece;
+				//	////
+				//	////		}
+				//	////
+				//	////	}
+				//	////
+				//	////
+				//	////}
+				//
+				//	////lineIsMade = true;
+				//	//for (int l = prov; l <= 0; l--) {
+				//
+				//	//	for (int m = 0; m < 10; m++) {
+				//
+				//	//		if (Map[(l - 1)][m] == 9) {
+				//
+				//	//			Map[l][m] = 0;
+				//	//			Map[l][m] = 9;
+				//
+				//	//			lineIsMade = true;
+				//
+				//	//		}
+				//
+				//	//	}
+				//
+				//	//}
+				//	Tctr = 0;
+				//}
 				if (Tctr == 10 && LineCompleted == false) { //**************+++++++++++++ this is the one that places the blocks
 
+					int RandomColor = (rand() % 9) + 200;
+					time1 = SDL_GetTicks();
+					ctr += 12;
+
 					for (int k = 0; k < 10; k++) {
 
-						Map[prov][k] = 200;
+						Map[prov][k] = RandomColor;
 
 					}
 
@@ -4394,6 +4510,129 @@ void ModulePlayer::TetraminoCheck() {
 					Tctr = 0;
 				}
 
+			}
+
+			if (Map[i][j] > 190)
+			{
+				Tctr++;
+
+				prov = i;
+
+				if (Tctr == 10 && LineCompleted == true) {
+
+					int time2 = SDL_GetTicks();
+					float seconds = (time2 - time1) / 1000.0f;
+
+					if (seconds > 0.03f && seconds < 0.04f)
+					{
+						int RandomColor = (rand() % 9) + 200;
+
+						for (int k = 0; k < 10; k++) {
+
+							Map[prov][k] = RandomColor;
+
+						}
+						Tctr = 0;
+					}
+					else if (seconds > 0.06f && seconds < 0.07f)
+					{
+						int RandomColor = (rand() % 9) + 200;
+
+						for (int k = 0; k < 10; k++) {
+
+							Map[prov][k] = RandomColor;
+
+						}
+						Tctr = 0;
+					}
+					else if (seconds > 0.09f && seconds < 0.1f)
+					{
+						int RandomColor = (rand() % 9) + 200;
+
+						for (int k = 0; k < 10; k++) {
+
+							Map[prov][k] = RandomColor;
+
+						}
+						Tctr = 0;
+					}
+					else if (seconds > 0.12f && seconds < 0.13f)
+					{
+						int RandomColor = (rand() % 9) + 200;
+
+						for (int k = 0; k < 10; k++) {
+
+							Map[prov][k] = RandomColor;
+
+						}
+						Tctr = 0;
+					}
+					else if (seconds > 0.15f && seconds < 0.16f)
+					{
+						int RandomColor = (rand() % 9) + 200;
+
+						for (int k = 0; k < 10; k++) {
+
+							Map[prov][k] = RandomColor;
+
+						}
+						Tctr = 0;
+					}
+					else if (seconds > 0.18f && seconds < 0.19f)
+					{
+						int RandomColor = (rand() % 9) + 200;
+
+						for (int k = 0; k < 10; k++) {
+
+							Map[prov][k] = RandomColor;
+
+						}
+						Tctr = 0;
+					}
+					else if (seconds > 0.21f && seconds < 0.22f)
+					{
+						
+						for (int k = 0; k < 10; k++) {
+
+							Map[prov][k] = 0;
+
+						}
+
+						prov--;
+
+						for (prov; prov >= 0; prov--) {
+
+							for (int k = 0; k < 10; k++) {
+
+								if (Map[prov][k] != 0) {
+
+									int get_piece = Map[prov][k];
+
+									if (get_piece == 105 && prov > i - 2)
+									{
+										get_piece = 94;
+									}
+									else if (get_piece == 96 && prov > i - 2)
+									{
+										get_piece = 97;
+									}
+
+									Map[prov][k] = 0;
+									Map[prov + 1][k] = get_piece;
+
+								}
+
+							}
+
+
+						}
+
+						lineIsMade = true;
+						LineCompleted = false;
+
+
+					}
+				}
 			}
 
 		}
