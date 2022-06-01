@@ -37,6 +37,19 @@ bool SceneLevel2::Start()
 
 	App->player->linesLeft = 10;
 	App->player->round++;
+	App->player->PieceType = (rand() % 7) + 1;
+	App->player->next = (rand() % 7) + 1;
+	App->player->row = 0;
+	App->player->col = 5;
+
+
+	for (int i = 0; i < 20; ++i)
+	{
+		for (int j = 0; j < 10; ++j)
+		{
+			App->player->Map[i][j] = 0;
+		}
+	}
 
 	return ret;
 }

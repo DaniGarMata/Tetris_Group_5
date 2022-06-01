@@ -130,6 +130,7 @@ public:
 
 	char PieceType = 1;
 	char PieceState = 0;
+	char next = 1;
 
 	int col = 5;
 	int row = 0; //@@ la columna y la fila en la que se encuentra el bloque, siendo la columna 5 la inicial, son variables internas de player pero están sinncronizadas con la matriz

@@ -59,7 +59,10 @@ bool SceneLevel1::Start()
 	App->player->score = 000;
 	App->player->lines = 000;
 	App->player->round = 001;
+	App->player->row = 0;
+	App->player->col = 5;
 	App->player->PieceType = (rand() % 7) + 1;
+	App->player->next = (rand() % 7) + 1;
 
 	for (int i = 0; i < 20; ++i)
 	{

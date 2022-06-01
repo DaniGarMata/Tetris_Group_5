@@ -85,7 +85,10 @@ bool ModulePlayer::Start()
 	HiscoreFont = App->fonts->Load("Assets/Fonts/FontBlue.png", lookupTable, 1);
 	linesLeftFont = App->fonts->Load("Assets/Fonts/FontWhite.png", lookupTable, 1);
 
-	linesLeft = 5;
+	
+
+	
+
 
 	return ret;
 }
@@ -100,8 +103,12 @@ Update_Status ModulePlayer::PreUpdate() {
 		row = 0;
 
 		MovablePiece = true;
-		PieceType = (rand() % 7)+1;
+
+		PieceType = next;
+		next = (rand() % 7) + 1;
 		PieceState = 0;
+
+		
 
 		position.x = col * 8 + 32;
 		position.y = row * 8 + 40;
@@ -115,6 +122,7 @@ Update_Status ModulePlayer::PreUpdate() {
 Update_Status ModulePlayer::Update()
 {
 	// Moving the player with the camera scroll
+	
 
 	if (PieceType == 0)  //OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
 	{
@@ -3531,13 +3539,94 @@ Update_Status ModulePlayer::Update()
 
 Update_Status ModulePlayer::PostUpdate()
 {
+	SDL_Rect* next_piece = new SDL_Rect;
+	if (next == 1)
+	{
+		//SDL_Rect* next_piece = new SDL_Rect;
+
+		next_piece->h = 16;
+		next_piece->w = 24;
+		next_piece->x = 96;
+		next_piece->y = 56;
+
+		App->render->Blit(texture, (8), (24), next_piece);
+	}
+	else if (next == 2)
+	{
+		//SDL_Rect* next_piece = new SDL_Rect;
+
+		next_piece->h = 16;
+		next_piece->w = 24;
+		next_piece->x = 96;
+		next_piece->y = 112;
+
+		App->render->Blit(texture, (8), (24), next_piece);
+	}
+	else if (next == 3)
+	{
+		//SDL_Rect* next_piece = new SDL_Rect;
+
+		next_piece->h = 16;
+		next_piece->w = 24;
+		next_piece->x = 0;
+		next_piece->y = 120;
+
+		App->render->Blit(texture, (8), (24), next_piece);
+	}
+	else if (next == 4)
+	{
+		//SDL_Rect* next_piece = new SDL_Rect;
+
+		next_piece->h = 16;
+		next_piece->w = 24;
+		next_piece->x = 25;
+		next_piece->y = 56;
+
+		App->render->Blit(texture, (8), (24), next_piece);
+	}
+	else if (next == 5)
+	{
+		//SDL_Rect* next_piece = new SDL_Rect;
+
+		next_piece->h = 16;
+		next_piece->w = 24;
+		next_piece->x = 32;
+		next_piece->y = 80;
+
+		App->render->Blit(texture, (8), (24), next_piece);
+	}
+	else if (next == 6)
+	{
+		//SDL_Rect* next_piece = new SDL_Rect;
+
+		next_piece->h = 8;
+		next_piece->w = 32;
+		next_piece->x = 0;
+		next_piece->y = 72;
+
+		App->render->Blit(texture, (8), (24), next_piece);
+	}
+	else if (next == 7)
+	{
+		//SDL_Rect* next_piece = new SDL_Rect;
+
+		next_piece->h = 16;
+		next_piece->w = 16;
+		next_piece->x = 80;
+		next_piece->y = 56;
+
+		App->render->Blit(texture, (8), (24), next_piece);
+	}
+	
+	SDL_Rect* tetramino = new SDL_Rect;
+
 	for (int i = 0; i < 20; i++) {
 
 		for (int j = 0; j < 10; j++) {
 
 			if (Map[i][j] == 9) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 
@@ -3552,7 +3641,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 95) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3564,7 +3653,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 96) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3576,7 +3665,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 104) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3588,7 +3677,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 94) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3600,7 +3689,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 92) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3612,7 +3701,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 93) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3624,7 +3713,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 103) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3636,7 +3725,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 105) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3648,7 +3737,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 97) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3660,7 +3749,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 102) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3672,7 +3761,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 34) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3684,7 +3773,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 36) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3696,7 +3785,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 37) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3708,7 +3797,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 42) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3720,7 +3809,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 35) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3732,7 +3821,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 33) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3744,7 +3833,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 44) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3756,7 +3845,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 32) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3768,7 +3857,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 43) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3780,7 +3869,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 45) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3792,7 +3881,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 62) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3804,7 +3893,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 64) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3816,7 +3905,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 72) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3828,7 +3917,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 73) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3840,7 +3929,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 65) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3852,7 +3941,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 67) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3864,7 +3953,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 74) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3876,7 +3965,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 75) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3888,7 +3977,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 47) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3900,7 +3989,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 55) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3912,7 +4001,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 52) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3924,7 +4013,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 49) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3936,7 +4025,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 56) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3948,7 +4037,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 52) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3960,7 +4049,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 54) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3972,7 +4061,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 50) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3984,7 +4073,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 56) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -3996,7 +4085,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 53) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4008,7 +4097,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 17) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4020,7 +4109,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 19) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4032,7 +4121,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 29) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4044,7 +4133,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 30) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4056,7 +4145,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 20) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4068,7 +4157,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 22) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4080,7 +4169,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 28) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4092,7 +4181,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 27) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4104,7 +4193,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 5) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4116,7 +4205,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 6) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4128,7 +4217,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 7) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4140,7 +4229,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 4) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4152,7 +4241,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 3) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4164,7 +4253,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 2) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4176,7 +4265,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 90) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4188,7 +4277,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 89) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4200,7 +4289,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 88) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4212,7 +4301,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 87) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4224,7 +4313,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 200) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4236,7 +4325,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 201) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4248,7 +4337,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 202) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4260,7 +4349,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 203) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4272,7 +4361,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 204) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4284,7 +4373,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 205) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4296,7 +4385,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 206) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4308,7 +4397,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 207) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4320,7 +4409,7 @@ Update_Status ModulePlayer::PostUpdate()
 			}
 			if (Map[i][j] == 208) {
 
-				SDL_Rect* tetramino = new SDL_Rect;
+				//SDL_Rect* tetramino = new SDL_Rect;
 
 				tetramino->h = 8;
 				tetramino->w = 8;
@@ -4363,6 +4452,9 @@ Update_Status ModulePlayer::PostUpdate()
 	App->fonts->BlitText(151, 143, linesLeftFont, "left");
 	App->fonts->BlitText(128, 183, HiscoreFont, "high score");
 	App->fonts->BlitText(128, 207, HiscoreFont, "round");
+
+	delete next_piece;
+	delete tetramino;
 
 	return Update_Status::UPDATE_CONTINUE;
 }
