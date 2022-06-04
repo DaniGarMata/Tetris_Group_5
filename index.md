@@ -1,41 +1,21 @@
-## Welcome to GitHub Pages
+# Team V: TETRIS
 
-You can use the [editor on GitHub](https://github.com/DaniGarMata/Tetris_Group_5/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+### A recreation of the classic puzzle game, Tetris!
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Stack differently-shaped blocks to fill lines, round up scores, and clear levels!
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/mhIrhcZ087c" title="YouTube video player"
-frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;
-picture-in-picture" allowfullscreen></iframe>
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Repository
+Here's the link to the game's repository:
+https://github.com/DaniGarMata/Tetris_Group_5
 
-```markdown
-Syntax highlighted code block
+## Team Members
 
-# Header 1
-## Header 2
-### Header 3
+<a href="https://ibb.co/4dc4XxQ"><img src="https://i.ibb.co/bJxNCnf/Team-photo.jpg" alt="Team-photo" border="0"></a>
 
-- Bulleted
-- List
+- Dani García - https://github.com/DaniGarMata
+- Sergio Garríguez - https://github.com/SergioGarriguez
+- Kaede Sato - https://github.com/KelptheWriter
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/DaniGarMata/Tetris_Group_5/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Besides their main responsibilities, each team member worked on the game's code.
