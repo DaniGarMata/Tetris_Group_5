@@ -18,4 +18,4 @@ https://github.com/DaniGarMata/Tetris_Group_5
 - Sergio Garríguez - https://github.com/SergioGarriguez
 - Kaede Sato - https://github.com/KelptheWriter
 
-Besides their main responsibilities, each team member worked on the game's code.
+Every team member worked on the game's code and assets.
