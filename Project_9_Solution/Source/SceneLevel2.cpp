@@ -41,6 +41,7 @@ bool SceneLevel2::Start()
 	App->player->next = (rand() % 7) + 1;
 	App->player->row = 0;
 	App->player->col = 5;
+	App->player->nextLevel = false;
 
 
 	for (int i = 0; i < 20; ++i)

@@ -56,9 +56,7 @@ bool SceneLevel1::Start()
 	App->player->Enable();
 	App->tetramino->Enable();
 	App->player->linesLeft = 005;
-	App->player->score = 000;
-	App->player->lines = 000;
-	App->player->round = 001;
+	App->player->nextLevel = false;
 	App->player->row = 0;
 	App->player->col = 5;
 	App->player->PieceType = (rand() % 7) + 1;

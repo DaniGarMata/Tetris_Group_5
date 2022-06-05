@@ -72,6 +72,9 @@ bool ModulePlayer::Start()
 	position.y = 40;
 
 	gameOver = false;
+	App->player->score = 000;
+	App->player->lines = 000;
+	App->player->round = 001;
 
 	/*collider = App->collisions->AddCollider({ position.x, position.y, 16, 24 }, Collider::Type::PLAYER, this);*/
 
@@ -122,6 +125,7 @@ Update_Status ModulePlayer::PreUpdate() {
 Update_Status ModulePlayer::Update()
 {
 	// Moving the player with the camera scroll
+	char speed = 7;
 	
 
 	if (PieceType == 0)  //OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO
@@ -324,7 +328,7 @@ Update_Status ModulePlayer::Update()
 
 		}
 
-		if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+		if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 		{
 
 			if (MovablePiece == true)
@@ -335,7 +339,7 @@ Update_Status ModulePlayer::Update()
 					if ((Map[row + 3][col] == 0) && (Map[row + 3][col +1 ] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 					{
 						
-						row++;
+						ctr -= speed;
 						position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 						
 					}
@@ -346,7 +350,8 @@ Update_Status ModulePlayer::Update()
 						Map[row+2][col] = 104;
 						Map[row+2][col+1] = 94;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 2 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -357,7 +362,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 2][col] = 104;
 					Map[row + 2][col + 1] = 94; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 				//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 				//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -420,7 +426,8 @@ Update_Status ModulePlayer::Update()
 							Map[row + 2][col] = 104;
 							Map[row + 2][col + 1] = 94;//@@ deja la casilla como ocupada
 							MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-							score = score + 2;
+							score = score + 1 * (1 * (1 + 20 - row));
+							RowsCleared = 0;
 						}
 
 					}
@@ -431,7 +438,8 @@ Update_Status ModulePlayer::Update()
 						Map[row + 2][col] = 104;
 						Map[row + 2][col + 1] = 94; //@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 					ctr = TIME_CTR;
@@ -494,7 +502,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -505,7 +513,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 2][col] == 0) && (Map[row + 2][col + 1] == 0) && (Map[row + 2][col + 2] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 					
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 					
 				}
@@ -516,7 +524,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col+2] = 103;
 					Map[row ][col + 2] = 95;  //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -527,7 +536,8 @@ Update_Status ModulePlayer::Update()
 				Map[row + 1][col + 2] = 103;
 				Map[row][col + 2] = 95; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -590,7 +600,8 @@ Update_Status ModulePlayer::Update()
 						Map[row + 1][col + 2] = 103;
 						Map[row][col + 2] = 95;  //@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -601,7 +612,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col + 2] = 103;
 					Map[row][col + 2] = 95; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -664,7 +676,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -675,7 +687,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 1][col] == 0) && (Map[row + 3][col + 1] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 					
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 					
 				}
@@ -686,7 +698,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col+1] = 96;
 					Map[row + 2][col + 1] = 97;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -697,7 +710,8 @@ Update_Status ModulePlayer::Update()
 				Map[row + 1][col + 1] = 96;
 				Map[row + 2][col + 1] = 97; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -760,7 +774,8 @@ Update_Status ModulePlayer::Update()
 						Map[row + 1][col + 1] = 96;
 						Map[row + 2][col + 1] = 97;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -771,7 +786,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col + 1] = 96;
 					Map[row + 2][col + 1] = 97; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -834,7 +850,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -844,8 +860,8 @@ Update_Status ModulePlayer::Update()
 				//row = 19;
 				if ((Map[row + 2][col] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row + 1][col + 2] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
-					
-					row++;
+					ctr -= speed;
+					//row++;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 					
 				}
@@ -856,7 +872,8 @@ Update_Status ModulePlayer::Update()
 					Map[row ][col + 2] = 94;
 					Map[row + 1][col] = 97;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -867,7 +884,8 @@ Update_Status ModulePlayer::Update()
 				Map[row][col + 2] = 94;
 				Map[row + 1][col] = 97; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -930,7 +948,8 @@ Update_Status ModulePlayer::Update()
 						Map[row][col + 2] = 94;
 						Map[row + 1][col] = 97;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -941,7 +960,8 @@ Update_Status ModulePlayer::Update()
 					Map[row][col + 2] = 94;
 					Map[row + 1][col] = 97; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -1004,7 +1024,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -1015,7 +1035,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 3][col] == 0) && (Map[row+1][col + 1] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 					
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 					
 				}
@@ -1026,7 +1046,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 2][col] = 37;
 					Map[row][col + 1] = 34;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -1037,7 +1058,8 @@ Update_Status ModulePlayer::Update()
 				Map[row + 2][col] = 37;
 				Map[row][col + 1] = 34; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -1100,7 +1122,8 @@ Update_Status ModulePlayer::Update()
 						Map[row + 2][col] = 37;
 						Map[row][col + 1] = 34;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -1111,7 +1134,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 2][col] = 37;
 					Map[row][col + 1] = 34; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -1174,7 +1198,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -1185,7 +1209,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 2][col] == 0) && (Map[row + 2][col + 1] == 0) && (Map[row + 2][col + 2] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 					
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 					
 				}
@@ -1196,7 +1220,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col + 2] = 34;
 					Map[row][col] = 35;  //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -1207,7 +1232,8 @@ Update_Status ModulePlayer::Update()
 				Map[row + 1][col + 2] = 34;
 				Map[row][col] = 35; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -1270,7 +1296,8 @@ Update_Status ModulePlayer::Update()
 						Map[row + 1][col + 2] = 34;
 						Map[row][col] = 35;  //@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -1281,7 +1308,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col + 2] = 34;
 					Map[row][col] = 35; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -1344,7 +1372,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -1355,7 +1383,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 3][col] == 0) && (Map[row + 3][col + 1] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 					
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 					
 				}
@@ -1366,7 +1394,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 2][col ] = 32;
 					Map[row + 2][col + 1] = 43;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -1377,7 +1406,8 @@ Update_Status ModulePlayer::Update()
 				Map[row + 2][col] = 32;
 				Map[row + 2][col + 1] = 43; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -1440,7 +1470,8 @@ Update_Status ModulePlayer::Update()
 						Map[row + 2][col] = 32;
 						Map[row + 2][col + 1] = 43;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -1451,7 +1482,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 2][col] = 32;
 					Map[row + 2][col + 1] = 43; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -1514,7 +1546,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -1525,7 +1557,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 1][col] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row + 2][col + 2] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 					
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 					
 				}
@@ -1536,7 +1568,8 @@ Update_Status ModulePlayer::Update()
 					Map[row][col + 2] = 45;
 					Map[row + 1][col+2] = 37;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -1547,7 +1580,8 @@ Update_Status ModulePlayer::Update()
 				Map[row][col + 2] = 45;
 				Map[row + 1][col + 2] = 37; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -1610,7 +1644,8 @@ Update_Status ModulePlayer::Update()
 						Map[row][col + 2] = 45;
 						Map[row + 1][col + 2] = 37;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -1621,7 +1656,8 @@ Update_Status ModulePlayer::Update()
 					Map[row][col + 2] = 45;
 					Map[row + 1][col + 2] = 37; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -1684,7 +1720,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -1695,7 +1731,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 2][col] == 0) && (Map[row + 2][col + 1] == 0) && (Map[row + 1][col + 2] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 					
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 					
 				}
@@ -1706,7 +1742,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col+1] = 73;
 					Map[row ][col + 2] = 64;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -1717,7 +1754,8 @@ Update_Status ModulePlayer::Update()
 				Map[row + 1][col + 1] = 73;
 				Map[row][col + 2] = 64; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -1780,7 +1818,7 @@ Update_Status ModulePlayer::Update()
 						Map[row + 1][col + 1] = 73;
 						Map[row][col + 2] = 64;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
 					}
 
 				}
@@ -1791,7 +1829,7 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col + 1] = 73;
 					Map[row][col + 2] = 64; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
 				}
 
 				ctr = TIME_CTR;
@@ -1854,7 +1892,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -1865,7 +1903,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 2][col] == 0) && (Map[row + 3][col + 1] == 0) )  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 					
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 					
 				}
@@ -1876,7 +1914,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col + 1] = 75;
 					Map[row+2][col + 1] = 67;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -1887,7 +1926,8 @@ Update_Status ModulePlayer::Update()
 				Map[row + 1][col + 1] = 75;
 				Map[row + 2][col + 1] = 67; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -1950,7 +1990,8 @@ Update_Status ModulePlayer::Update()
 						Map[row + 1][col + 1] = 75;
 						Map[row + 2][col + 1] = 67;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -1961,7 +2002,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col + 1] = 75;
 					Map[row + 2][col + 1] = 67; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -2024,7 +2066,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -2035,7 +2077,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 1][col] == 0) && (Map[row + 2][col + 1] == 0) && (Map[row + 1][col + 2] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 					
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 					
 				}
@@ -2046,7 +2088,8 @@ Update_Status ModulePlayer::Update()
 					Map[row][col + 2] = 49;
 					Map[row + 1][col + 1] = 52;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -2057,7 +2100,8 @@ Update_Status ModulePlayer::Update()
 				Map[row][col + 2] = 49;
 				Map[row + 1][col + 1] = 52; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -2120,7 +2164,8 @@ Update_Status ModulePlayer::Update()
 						Map[row][col + 2] = 49;
 						Map[row + 1][col + 1] = 52;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -2131,7 +2176,8 @@ Update_Status ModulePlayer::Update()
 					Map[row][col + 2] = 49;
 					Map[row + 1][col + 1] = 52; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -2194,7 +2240,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -2205,7 +2251,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 3][col] == 0) && (Map[row + 2][col + 1] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 					
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 					
 				}
@@ -2216,7 +2262,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 2][col] = 52;
 					Map[row + 1][col + 1] = 49;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -2227,7 +2274,8 @@ Update_Status ModulePlayer::Update()
 				Map[row + 2][col] = 52;
 				Map[row + 1][col + 1] = 49; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -2290,7 +2338,8 @@ Update_Status ModulePlayer::Update()
 						Map[row + 2][col] = 52;
 						Map[row + 1][col + 1] = 49;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -2301,7 +2350,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 2][col] = 52;
 					Map[row + 1][col + 1] = 49; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -2364,7 +2414,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -2375,7 +2425,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 2][col] == 0) && (Map[row + 2][col + 1] == 0) && (Map[row + 2][col + 2] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 					
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 					
 				}
@@ -2386,7 +2436,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col+2] = 49;
 					Map[row ][col +1] = 50;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -2397,7 +2448,8 @@ Update_Status ModulePlayer::Update()
 				Map[row + 1][col + 2] = 49;
 				Map[row][col + 1] = 50;//@@ //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -2460,7 +2512,8 @@ Update_Status ModulePlayer::Update()
 						Map[row + 1][col + 2] = 49;
 						Map[row][col + 1] = 50;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -2471,7 +2524,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col + 2] = 49;
 					Map[row][col + 1] = 50;//@@ //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -2534,7 +2588,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -2545,7 +2599,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 2][col] == 0) && (Map[row + 3][col + 1] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 
 				}
@@ -2556,7 +2610,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 2][col + 1] = 52;
 					Map[row][col + 1] = 50;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -2567,7 +2622,8 @@ Update_Status ModulePlayer::Update()
 				Map[row + 2][col + 1] = 52;
 				Map[row][col + 1] = 50;//@@ //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -2630,7 +2686,8 @@ Update_Status ModulePlayer::Update()
 						Map[row + 2][col + 1] = 52;
 						Map[row][col + 1] = 50;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -2641,7 +2698,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 2][col + 1] = 52;
 					Map[row][col + 1] = 50;//@@ //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -2704,7 +2762,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -2715,7 +2773,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 1][col] == 0) && (Map[row + 2][col + 1] == 0) && (Map[row + 2][col + 2] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 
 				}
@@ -2726,7 +2784,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col + 1] = 29;
 					Map[row + 1][col + 2] = 19;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -2737,7 +2796,8 @@ Update_Status ModulePlayer::Update()
 				Map[row + 1][col + 1] = 29;
 				Map[row + 1][col + 2] = 19; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -2800,7 +2860,8 @@ Update_Status ModulePlayer::Update()
 						Map[row + 1][col + 1] = 29;
 						Map[row + 1][col + 2] = 19;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -2811,7 +2872,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col + 1] = 29;
 					Map[row + 1][col + 2] = 19; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -2874,7 +2936,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -2885,7 +2947,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 3][col] == 0) && (Map[row + 2][col + 1] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 
 				}
@@ -2896,7 +2958,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col + 1] = 28;
 					Map[row+2][col] = 22;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -2907,7 +2970,8 @@ Update_Status ModulePlayer::Update()
 				Map[row + 1][col + 1] = 28;
 				Map[row + 2][col] = 22; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -2970,7 +3034,8 @@ Update_Status ModulePlayer::Update()
 						Map[row + 1][col + 1] = 28;
 						Map[row + 2][col] = 22;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -2981,7 +3046,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 1][col + 1] = 28;
 					Map[row + 2][col] = 22; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -3044,7 +3110,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -3055,7 +3121,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row +1][col] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row + 1][col + 2] == 0) && (Map[row + 1][col + 3] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 
 				}
@@ -3066,7 +3132,8 @@ Update_Status ModulePlayer::Update()
 					Map[row][col + 2] = 3;
 					Map[row][col+3] = 4;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -3077,7 +3144,8 @@ Update_Status ModulePlayer::Update()
 				Map[row][col + 2] = 3;
 				Map[row][col + 3] = 4; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -3140,7 +3208,8 @@ Update_Status ModulePlayer::Update()
 						Map[row][col + 2] = 3;
 						Map[row][col + 3] = 4;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -3151,7 +3220,8 @@ Update_Status ModulePlayer::Update()
 					Map[row][col + 2] = 3;
 					Map[row][col + 3] = 4; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -3214,7 +3284,7 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
@@ -3225,7 +3295,7 @@ Update_Status ModulePlayer::Update()
 				if ((Map[row + 4][col] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 
 				}
@@ -3236,7 +3306,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 2][col]  = 6;
 					Map[row + 3][col ] = 7;//@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -3247,7 +3318,8 @@ Update_Status ModulePlayer::Update()
 				Map[row + 2][col] = 6;
 				Map[row + 3][col] = 7; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2 * (1 * (1 + 20 - row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -3310,7 +3382,8 @@ Update_Status ModulePlayer::Update()
 						Map[row + 2][col] = 6;
 						Map[row + 3][col] = 7;//@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -3321,7 +3394,8 @@ Update_Status ModulePlayer::Update()
 					Map[row + 2][col] = 6;
 					Map[row + 3][col] = 7; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -3384,18 +3458,19 @@ Update_Status ModulePlayer::Update()
 
 	}
 
-	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_DOWN)
+	if (App->input->keys[SDL_SCANCODE_DOWN] == Key_State::KEY_REPEAT)
 	{
 
 		if (MovablePiece == true)
 		{
+			
 			if (row < 18)
 			{
 				//row = 19;
 				if ((Map[row + 2][col] == 0) && (Map[row + 2][col + 1] == 0))  //@@ comprueba si la siguiente casilla est・ocupada por un 9 que ser僘 el equivalente a un bloque desactivado, aunque de momento no haya representaci grafica
 				{
 					
-					row++;
+					ctr -= speed;
 					position.y = row * 8 + 40; //@@ row*8 los pixeles por fila del campo de juego, +40 para que se posicione correctamente en el campo de juego
 					
 				}
@@ -3406,7 +3481,8 @@ Update_Status ModulePlayer::Update()
 					Map[row][col] = 87;
 					Map[row][col + 1] = 90;  //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 2 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 			}
@@ -3417,7 +3493,8 @@ Update_Status ModulePlayer::Update()
 				Map[row][col] = 87;
 				Map[row][col + 1] = 90; //@@ deja la casilla como ocupada
 				MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-				score = score + 2;
+				score = score + 2*(1*(1+20-row));
+				RowsCleared = 0;
 			}
 			//@@ comprobar las posibilidades de movimiento en la matriz permite no hacer uso de colliders, para hacer un tetromino completo hab僘 pensado en hacerlo con 4 de estos
 			//@@ bloques que funcionasen al mismo tiempoo y la prueba de si se pueden mover o no estubiese unificada para los 4 de alguna forma pero el primer problema es conseguir
@@ -3475,7 +3552,8 @@ Update_Status ModulePlayer::Update()
 						Map[row][col] = 87;
 						Map[row][col + 1] = 90;  //@@ deja la casilla como ocupada
 						MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-						score = score + 2;
+						score = score + 1 * (1 * (1 + 20 - row));
+						RowsCleared = 0;
 					}
 
 				}
@@ -3486,7 +3564,8 @@ Update_Status ModulePlayer::Update()
 					Map[row][col] = 87;
 					Map[row][col + 1] = 90; //@@ deja la casilla como ocupada
 					MovablePiece = false; //@@ para ponerlo a false y que deje de poder moverse, solo si intenta bajar y no puede
-					score = score + 2;
+					score = score + 1 * (1 * (1 + 20 - row));
+					RowsCleared = 0;
 				}
 
 				ctr = TIME_CTR;
@@ -3639,7 +3718,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 95) {
+			else if (Map[i][j] == 95) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3651,7 +3730,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 96) {
+			else if (Map[i][j] == 96) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3663,7 +3742,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 104) {
+			else if (Map[i][j] == 104) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3675,7 +3754,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 94) {
+			else if (Map[i][j] == 94) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3687,7 +3766,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 92) {
+			else if (Map[i][j] == 92) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3699,7 +3778,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 93) {
+			else if (Map[i][j] == 93) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3711,7 +3790,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 103) {
+			else if (Map[i][j] == 103) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3723,7 +3802,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 105) {
+			else if (Map[i][j] == 105) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3735,7 +3814,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 97) {
+			else if (Map[i][j] == 97) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3747,7 +3826,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 102) {
+			else if (Map[i][j] == 102) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3759,7 +3838,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 34) {
+			else if (Map[i][j] == 34) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3771,7 +3850,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 36) {
+			else if (Map[i][j] == 36) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3783,7 +3862,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 37) {
+			else if (Map[i][j] == 37) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3795,7 +3874,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 42) {
+			else if (Map[i][j] == 42) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3807,7 +3886,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 35) {
+			else if (Map[i][j] == 35) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3819,7 +3898,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 33) {
+			else if (Map[i][j] == 33) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3831,7 +3910,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 44) {
+			else if (Map[i][j] == 44) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3843,7 +3922,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 32) {
+			else if (Map[i][j] == 32) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3855,7 +3934,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 43) {
+			else if (Map[i][j] == 43) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3867,7 +3946,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 45) {
+			else if (Map[i][j] == 45) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3879,7 +3958,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 62) {
+			else if (Map[i][j] == 62) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3891,7 +3970,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 64) {
+			else if (Map[i][j] == 64) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3903,7 +3982,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 72) {
+			else if (Map[i][j] == 72) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3915,7 +3994,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 73) {
+			else if (Map[i][j] == 73) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3927,7 +4006,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 65) {
+			else if (Map[i][j] == 65) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3939,7 +4018,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 67) {
+			else if (Map[i][j] == 67) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3951,7 +4030,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 74) {
+			else if (Map[i][j] == 74) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3963,7 +4042,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 75) {
+			else if (Map[i][j] == 75) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3975,7 +4054,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 47) {
+			else if (Map[i][j] == 47) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3987,7 +4066,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 55) {
+			else if (Map[i][j] == 55) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -3999,7 +4078,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 52) {
+			else if (Map[i][j] == 52) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4011,7 +4090,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 49) {
+			else if (Map[i][j] == 49) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4023,7 +4102,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 56) {
+			else if (Map[i][j] == 56) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4035,7 +4114,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 52) {
+			else if (Map[i][j] == 52) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4047,7 +4126,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 54) {
+			else if (Map[i][j] == 54) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4059,7 +4138,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 50) {
+			else if (Map[i][j] == 50) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4071,7 +4150,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 56) {
+			else if (Map[i][j] == 56) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4083,7 +4162,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 53) {
+			else if (Map[i][j] == 53) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4095,7 +4174,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 17) {
+			else if (Map[i][j] == 17) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4107,7 +4186,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 19) {
+			else if (Map[i][j] == 19) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4119,7 +4198,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 29) {
+			else if (Map[i][j] == 29) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4131,7 +4210,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 30) {
+			else if (Map[i][j] == 30) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4143,7 +4222,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 20) {
+			else if (Map[i][j] == 20) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4155,7 +4234,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 22) {
+			else if (Map[i][j] == 22) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4167,7 +4246,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 28) {
+			else if (Map[i][j] == 28) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4179,7 +4258,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 27) {
+			else if (Map[i][j] == 27) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4191,7 +4270,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 5) {
+			else if (Map[i][j] == 5) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4203,7 +4282,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 6) {
+			else if (Map[i][j] == 6) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4215,7 +4294,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 7) {
+			else if (Map[i][j] == 7) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4227,7 +4306,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 4) {
+			else if (Map[i][j] == 4) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4239,7 +4318,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 3) {
+			else if (Map[i][j] == 3) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4251,7 +4330,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 2) {
+			else if (Map[i][j] == 2) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4263,7 +4342,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 90) {
+			else if (Map[i][j] == 90) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4275,7 +4354,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 89) {
+			else if (Map[i][j] == 89) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4287,7 +4366,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 88) {
+			else if (Map[i][j] == 88) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4299,7 +4378,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 87) {
+			else if (Map[i][j] == 87) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4311,7 +4390,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 200) {
+			else if (Map[i][j] == 200) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4323,7 +4402,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 201) {
+			else if (Map[i][j] == 201) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4335,7 +4414,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 202) {
+			else if (Map[i][j] == 202) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4347,7 +4426,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 203) {
+			else if (Map[i][j] == 203) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4359,7 +4438,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 204) {
+			else if (Map[i][j] == 204) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4371,7 +4450,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 205) {
+			else if (Map[i][j] == 205) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4383,7 +4462,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 206) {
+			else if (Map[i][j] == 206) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4395,7 +4474,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 207) {
+			else if (Map[i][j] == 207) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4407,7 +4486,7 @@ Update_Status ModulePlayer::PostUpdate()
 				App->render->Blit(texture, (j * 8 + 32), (i * 8 + 40), tetramino);
 
 			}
-			if (Map[i][j] == 208) {
+			else if (Map[i][j] == 208) {
 
 				//SDL_Rect* tetramino = new SDL_Rect;
 
@@ -4733,7 +4812,21 @@ void ModulePlayer::TetraminoCheck() {
 
 			lines = lines++;
 			linesLeft = linesLeft--;
-			score = score + (10 * 2);
+			RowsCleared++;
+
+			score = score + 50;
+			if (RowsCleared == 2)
+			{
+				score = score + 50;
+			}
+			else if (RowsCleared == 3)
+			{
+				score = score + 200;
+			}
+			else if (RowsCleared == 4)
+			{
+				score = score + 450;
+			}
 
 			lineIsMade = false;
 
