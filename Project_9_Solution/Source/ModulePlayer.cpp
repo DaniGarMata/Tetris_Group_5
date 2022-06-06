@@ -374,7 +374,17 @@ Update_Status ModulePlayer::Update()
 
 		if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 		{
-			PieceState++;
+			if ((col < 8) && (Map[row][col+2] == 0) && (Map[row + 1][col] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row + 1][col + 2] == 0))
+			{
+				PieceState++;
+			}
+			else if ((col < 9) && (col > 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col - 1] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row + 1][col] == 0))
+			{
+				col--;
+				PieceState++;
+				position.x = col * 8 + 32;
+			}
+			
 
 			if (PieceState > 3)
 			{
@@ -548,7 +558,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 9) && (Map[row][col] == 0) && (Map[row][col + 2] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row + 2][col + 1] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 10) && (col > 0) && (Map[row][col - 1] == 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col] == 0) && (Map[row + 2][col] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 3)
 		{
@@ -722,7 +741,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 8) && (Map[row][col + 2] == 0) && (Map[row + 1][col] == 0) && (Map[row][col + 1] == 0) && (Map[row ][col] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 9) && (col > 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col - 1] == 0) && (Map[row][col] == 0) && (Map[row][col - 1] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 3)
 		{
@@ -896,7 +924,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 9) && (Map[row][col] == 0) && (Map[row + 1][col] == 0) && (Map[row + 2][col] == 0) && (Map[row + 2][col + 1] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 10) && (col > 0) && (Map[row][col - 1] == 0) && (Map[row + 1][col - 1] == 0) && (Map[row + 2][col - 1] == 0) && (Map[row + 2][col] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 3)
 		{
@@ -1070,7 +1107,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 8) && (Map[row][col] == 0) && (Map[row + 1][col] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row + 1][col + 2] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 9) && (col > 0) && (Map[row][col - 1] == 0) && (Map[row + 1][col - 1] == 0) && (Map[row + 1][col] == 0) && (Map[row + 1][col + 1] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 3)
 		{
@@ -1244,7 +1290,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 9) && (Map[row + 2][col] == 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row + 2][col + 1] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 10) && (col > 0) && (Map[row + 2][col - 1] == 0) && (Map[row][col] == 0) && (Map[row + 1][col] == 0) && (Map[row + 2][col] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 3)
 		{
@@ -1418,7 +1473,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 8) && (Map[row][col] == 0) && (Map[row][col + 1] == 0) && (Map[row][col + 2] == 0) && (Map[row + 1][col + 2] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 9) && (col > 0) && (Map[row][col - 1] == 0) && (Map[row][col] == 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col + 1] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 3)
 		{
@@ -1592,7 +1656,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 9) && (Map[row][col] == 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col] == 0) && (Map[row + 2][col] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 10) && (col > 0) && (Map[row][col - 1] == 0) && (Map[row][col] == 0) && (Map[row + 1][col - 1] == 0) && (Map[row + 2][col - 1] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 3)
 		{
@@ -1766,7 +1839,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 9) && (Map[row + 1][col] == 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row][col + 2] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 10) && (col > 0) && (Map[row + 1][col - 1] == 0) && (Map[row][col] == 0) && (Map[row + 1][col] == 0) && (Map[row][col + 1] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 1)
 		{
@@ -1938,7 +2020,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 8) && (Map[row][col] == 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row + 2][col + 1] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 9) && (col > 0) && (Map[row][col - 1] == 0) && (Map[row][col] == 0) && (Map[row + 1][col] == 0) && (Map[row + 2][col] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 1)
 		{
@@ -2112,7 +2203,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 9) && (Map[row + 1][col] == 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row + 2][col + 1] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 10) && (col > 0) && (Map[row + 1][col - 1] == 0) && (Map[row][col] == 0) && (Map[row + 1][col] == 0) && (Map[row + 2][col] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 3)
 		{
@@ -2286,7 +2386,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 8) && (Map[row + 1][col] == 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row + 1][col + 2] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 9) && (col > 0) && (Map[row + 1][col - 1] == 0) && (Map[row][col] == 0) && (Map[row + 1][col] == 0) && (Map[row + 1][col + 1] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 3)
 		{
@@ -2460,7 +2569,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 9) && (Map[row + 1][col] == 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row + 2][col + 1] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 10) && (col > 0) && (Map[row + 1][col -1] == 0) && (Map[row][col] == 0) && (Map[row + 1][col] == 0) && (Map[row + 2][col] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 3)
 		{
@@ -2634,7 +2752,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 8) && (Map[row][col] == 0) && (Map[row][col + 1] == 0) && (Map[row][col + 2] == 0) && (Map[row + 1][col + 1] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 9) && (col > 0) && (Map[row][col - 1] == 0) && (Map[row][col] == 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 3)
 		{
@@ -2808,7 +2935,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 9) && (Map[row + 1][col] == 0) && (Map[row + 2][col] == 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col + 1] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 10) && (col > 0) && (Map[row + 1][col - 1] == 0) && (Map[row + 2][col - 1] == 0) && (Map[row][col] == 0) && (Map[row + 1][col] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 1)
 		{
@@ -2982,7 +3118,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 8) && (Map[row][col] == 0) && (Map[row][col + 1] == 0) && (Map[row + 1][col + 1] == 0) && (Map[row + 1][col + 2] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 9) && (col > 0) && (Map[row][col - 1] == 0) && (Map[row][col] == 0) && (Map[row + 1][col] == 0) && (Map[row + 1][col + 1] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 1)
 		{
@@ -3156,7 +3301,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 8) && (Map[row][col] == 0) && (Map[row + 1][col] == 0) && (Map[row + 2][col] == 0) && (Map[row + 3][col] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 9) && (col > 0) && (Map[row][col - 1] == 0) && (Map[row + 1][col - 1] == 0) && (Map[row + 2][col - 1] == 0) && (Map[row + 3][col - 1] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 1)
 		{
@@ -3330,7 +3484,16 @@ Update_Status ModulePlayer::Update()
 
 	if (App->input->keys[SDL_SCANCODE_SPACE] == Key_State::KEY_DOWN)
 	{
-		PieceState++;
+		if ((col < 7) && (Map[row][col] == 0) && (Map[row][col + 1] == 0) && (Map[row][col + 2] == 0) && (Map[row][col + 3] == 0))
+		{
+			PieceState++;
+		}
+		else if ((col < 8) && (col > 0) && (Map[row][col - 1] == 0) && (Map[row][col - 2] == 0) && (Map[row][col - 3] == 0) && (Map[row][col - 4] == 0))
+		{
+			col--;
+			PieceState++;
+			position.x = col * 8 + 32;
+		}
 
 		if (PieceState > 1)
 		{

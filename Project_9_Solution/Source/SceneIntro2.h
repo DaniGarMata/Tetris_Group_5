@@ -30,6 +30,10 @@ public:
 public:
 	// The scene sprite sheet loaded into an SDL_Texture
 	SDL_Texture* bgTexture = nullptr;
+	int fwTimers[5];
+	int fwX[5] = { 22, 65, 182, 230, 270 };
+	int fwY[5] = { 37, 15, 13, 21, 34 };
+	uint creditFx = 0;
 };
 
 #endif

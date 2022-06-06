@@ -1,6 +1,10 @@
 #ifndef __SCENE_INTRO_H__
 #define __SCENE_INTRO_H__
 
+#define TITLE_SCREEN_NFRAMES 11
+#define TITLE_SCREEN_FRAME_DELAY 10
+#define TITLE_SCREEN_START_COUTNDOWN 240
+
 #include "Module.h"
 #include "Animation.h"
 
@@ -29,7 +33,11 @@ public:
 
 public:
 	// The scene sprite sheet loaded into an SDL_Texture
-	SDL_Texture* bgTexture = nullptr;
+	SDL_Texture* bgTexture[TITLE_SCREEN_NFRAMES] = { nullptr };
+	unsigned int frame;
+	unsigned int delay;
+	unsigned int countdown;
+	bool anim = false; //determines if day-night animation starts
 };
 
 #endif
