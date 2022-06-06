@@ -7,6 +7,7 @@
 #include "ModuleCollisions.h"
 #include "ModuleTetramino.h"
 #include "ModulePlayer.h"
+#include "ModuleFadeToBlack.h"
 
 SceneLevel1::SceneLevel1(bool startEnabled) : Module(startEnabled)
 {
@@ -29,7 +30,7 @@ bool SceneLevel1::Start()
 	App->audio->PlayMusic("Assets/Music/02-Loginska.ogg", 1.0f);
 
 	//Bottomside collider
-	App->collisions->AddCollider({ 0, 198, 335, 200 }, Collider::Type::WALL);
+	//App->collisions->AddCollider({ 0, 198, 335, 200 }, Collider::Type::WALL);
 
 	// Enemies --- 
 	/*App->enemies->AddEnemy(Enemy_Type::REDBIRD, 600, 80);
@@ -53,14 +54,41 @@ bool SceneLevel1::Start()
 	App->render->camera.y = 0;
 
 	App->player->Enable();
-	App->player->linesLeft = 005;
 	App->tetramino->Enable();
+	App->player->linesLeft = 005;
+	App->player->nextLevel = false;
+	App->player->row = 0;
+	App->player->col = 5;
+	App->player->PieceType = (rand() % 7) + 1;
+	App->player->next = (rand() % 7) + 1;
+
+	for (int i = 0; i < 20; ++i)
+	{
+		for (int j = 0; j < 10; ++j)
+		{
+			App->player->Map[i][j] = 0;
+		}
+	}
 
 	return ret;
 }
 
 Update_Status SceneLevel1::Update()
 {
+
+	App->player->TetraminoCheck();
+
+	if(App->player->gameOver == true) {
+
+		App->fade->FadeToBlack(this, (Module*)App->sceneGameOver, 90);
+
+	}
+
+	if (App->player->nextLevel == true) {
+
+		App->fade->FadeToBlack(this, (Module*)App->sceneLevel_2, 90);
+
+	}
 
 	return Update_Status::UPDATE_CONTINUE;
 }

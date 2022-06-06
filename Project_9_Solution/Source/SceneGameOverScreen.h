@@ -1,19 +1,19 @@
-#ifndef __SCENE_INTRO2_H__
-#define __SCENE_INTRO2_H__
+#ifndef __SCENE_GAMEOVER_SCREEN_H__
+#define __SCENE_GAMEOVER_SCREEN_H__
 
 #include "Module.h"
 #include "Animation.h"
 
 struct SDL_Texture;
 
-class SceneIntro2 : public Module
+class GameOverScreen : public Module
 {
 public:
 	//Constructor
-	SceneIntro2(bool startEnabled);
+	GameOverScreen(bool startEnabled);
 
 	//Destructor
-	~SceneIntro2();
+	~GameOverScreen();
 
 	// Called when the module is activated
 	// Loads the necessary textures for the map background
@@ -30,10 +30,6 @@ public:
 public:
 	// The scene sprite sheet loaded into an SDL_Texture
 	SDL_Texture* bgTexture = nullptr;
-	int fwTimers[5];
-	int fwX[5] = { 22, 65, 182, 230, 270 };
-	int fwY[5] = { 37, 15, 13, 21, 34 };
-	uint creditFx = 0;
 };
 
 #endif

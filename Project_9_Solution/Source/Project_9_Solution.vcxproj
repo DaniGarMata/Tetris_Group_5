@@ -78,7 +78,9 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Collider.h" />
     <ClInclude Include="ModuleFade.h" />
+    <ClInclude Include="SceneGameOverScreen.h" />
     <ClInclude Include="SceneIntro2.h" />
+    <ClInclude Include="SceneLevel2.h" />
     <ClInclude Include="Tetramino.h" />
     <ClInclude Include="Pink_Tetramino.h" />
     <ClInclude Include="Enemy_Mech.h" />
@@ -108,7 +110,9 @@
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="ModuleFade.cpp" />
+    <ClCompile Include="SceneGameOverScreen.cpp" />
     <ClCompile Include="SceneIntro2.cpp" />
+    <ClCompile Include="SceneLevel2.cpp" />
     <ClCompile Include="Tetramino.cpp" />
     <ClCompile Include="Pink_Tetramino.cpp" />
     <ClCompile Include="Enemy_Mech.cpp" />

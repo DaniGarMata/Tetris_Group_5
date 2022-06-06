@@ -10,7 +10,7 @@
 
 ModuleParticles::ModuleParticles(bool startEnabled) : Module(startEnabled)
 {
-	for(uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 		particles[i] = nullptr;
 }
 
@@ -21,24 +21,41 @@ ModuleParticles::~ModuleParticles()
 
 bool ModuleParticles::Start()
 {
-	//LOG("Loading particles");
-	//texture = App->textures->Load("Assets/Sprites/particles.png");
+	LOG("Loading particles");
+	texture = App->textures->Load("Assets/Sprites/Fireworks.png");
 
-	//// Explosion particle
-	//explosion.anim.PushBack({274, 296, 33, 30});
-	//explosion.anim.PushBack({313, 296, 33, 30});
-	//explosion.anim.PushBack({346, 296, 33, 30});
-	//explosion.anim.PushBack({382, 296, 33, 30});
-	//explosion.anim.PushBack({419, 296, 33, 30});
-	//explosion.anim.PushBack({457, 296, 33, 30});
-	//explosion.anim.loop = false;
-	//explosion.anim.speed = 0.3f;
+	//// Fireworks particles
+	fireworks1.anim.PushBack({ 0, 0, 48, 48 });
+	fireworks1.anim.PushBack({ 48, 0, 48, 48 });
+	fireworks1.anim.PushBack({ 96, 0, 48, 48 });
+	fireworks1.anim.PushBack({ 144, 0, 48, 48 });
+	fireworks1.anim.PushBack({ 192, 0, 48, 48 });
+	fireworks1.anim.PushBack({ 0, 48, 48, 48 });
+	fireworks1.anim.PushBack({ 48, 48, 48, 48 });
+	fireworks1.anim.PushBack({ 96, 48, 48, 48 });
+	fireworks1.anim.PushBack({ 144, 48, 48, 48 });
+	fireworks1.anim.loop = false;
+	fireworks1.anim.speed = 0.1f;
 
-	//laser.anim.PushBack({ 232, 103, 16, 12 });
-	//laser.anim.PushBack({ 249, 103, 16, 12 });
-	//laser.speed.x = 5;
-	//laser.lifetime = 180;
-	//laser.anim.speed = 0.2f;
+	fireworks2.anim.PushBack({ 192, 48, 48, 48 });
+	fireworks2.anim.PushBack({ 0, 96, 48, 48 });
+	fireworks2.anim.PushBack({ 48, 96, 48, 48 });
+	fireworks2.anim.PushBack({ 96, 96, 48, 48 });
+	fireworks2.anim.PushBack({ 144, 96, 48, 48 });
+	fireworks2.anim.PushBack({ 192, 96, 48, 48 });
+	fireworks2.anim.PushBack({ 0, 144, 48, 48 });
+	fireworks2.anim.loop = false;
+	fireworks2.anim.speed = 0.1f;
+
+	fireworks3.anim.PushBack({ 48, 144, 48, 48 });
+	fireworks3.anim.PushBack({ 96, 144, 48, 48 });
+	fireworks3.anim.PushBack({ 144, 144, 48, 48 });
+	fireworks3.anim.PushBack({ 192, 144, 48, 48 });
+	fireworks3.anim.PushBack({ 48, 192, 48, 48 });
+	fireworks3.anim.PushBack({ 96, 192, 48, 48 });
+	fireworks3.anim.PushBack({ 144, 192, 48, 48 });
+	fireworks3.anim.loop = false;
+	fireworks3.anim.speed = 0.1f;
 
 	return true;
 }
@@ -63,9 +80,9 @@ bool ModuleParticles::CleanUp()
 	LOG("Unloading particles");
 
 	// Delete all remaining active particles on application exit 
-	for(uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
-		if(particles[i] != nullptr)
+		if (particles[i] != nullptr)
 		{
 			delete particles[i];
 			particles[i] = nullptr;
@@ -91,14 +108,14 @@ void ModuleParticles::OnCollision(Collider* c1, Collider* c2)
 
 Update_Status ModuleParticles::Update()
 {
-	for(uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
+	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
 		Particle* particle = particles[i];
 
-		if(particle == nullptr)	continue;
+		if (particle == nullptr)	continue;
 
 		// Call particle Update. If it has reached its lifetime, destroy it
-		if(particle->Update() == false)
+		if (particle->Update() == false)
 		{
 			particles[i]->SetToDelete();
 		}

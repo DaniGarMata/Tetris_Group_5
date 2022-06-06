@@ -1,19 +1,19 @@
-#ifndef __SCENE_INTRO2_H__
-#define __SCENE_INTRO2_H__
+#ifndef __SCENE_LEVEL2_H__
+#define __SCENE_LEVEL2_H__
 
 #include "Module.h"
 #include "Animation.h"
 
 struct SDL_Texture;
 
-class SceneIntro2 : public Module
+class SceneLevel2 : public Module
 {
 public:
 	//Constructor
-	SceneIntro2(bool startEnabled);
+	SceneLevel2(bool startEnabled);
 
 	//Destructor
-	~SceneIntro2();
+	~SceneLevel2();
 
 	// Called when the module is activated
 	// Loads the necessary textures for the map background
@@ -27,13 +27,13 @@ public:
 	// Performs the render call of all the parts of the scene's background
 	Update_Status PostUpdate() override;
 
+	// Disables the player and the enemies
+	bool CleanUp();
+
 public:
+
 	// The scene sprite sheet loaded into an SDL_Texture
 	SDL_Texture* bgTexture = nullptr;
-	int fwTimers[5];
-	int fwX[5] = { 22, 65, 182, 230, 270 };
-	int fwY[5] = { 37, 15, 13, 21, 34 };
-	uint creditFx = 0;
 };
 
 #endif
